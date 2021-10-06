@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "462441991796",
+    "firebase_url": "https://fantasygp-31b35-default-rtdb.firebaseio.com",
+    "project_id": "fantasygp-31b35",
+    "storage_bucket": "fantasygp-31b35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462441991796:android:51c8a1f7c8548fd926cb21",
+        "android_client_info": {
+          "package_name": "com.bds.fantasyMotogp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462441991796-pe3kftiq9nlch16c20qns04qkjjgnnlb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmJHXmJWB6OWIh0BEP1YKujI3OI08eBWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462441991796-pe3kftiq9nlch16c20qns04qkjjgnnlb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462441991796-69c7h9mkj32hkahs3d352btta76sg5rg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bds.fantasyMotogp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
