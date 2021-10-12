@@ -30,6 +30,12 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
     final riders = riderData.rider;
     List riderPickedList = [];
 
+    Rider selectedRider = new Rider();
+
+    void passSelectedRider(Rider rider) {
+      Navigator.pop(context, rider);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Rider'),
@@ -42,10 +48,11 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                 alignment: Alignment.center,
                 child: CircularProgressIndicator());
           }
+          // Reading all riders from firebase to select from
           final List riderList =
               snapshot.data.docs.map((e) => e.data()).toList();
 
-          //print(teamsList);
+          // Creating a list of riders to select
           return ListView.builder(
             itemCount: riderList.length,
             itemBuilder: (ctx, i) {
@@ -56,13 +63,15 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                     '${riderList[i]['name']}',
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(
-                      Rider(
-                          image: riderList[i]['image'],
-                          id: riderList[i]['id'],
-                          name: riderList[i]['name'],
-                          team: riderList[i]['team']),
-                    );
+                    selectedRider = Rider(
+                        image: riderList[i]['image'],
+                        id: riderList[i]['id'],
+                        name: riderList[i]['name'],
+                        team: riderList[i]['team']);
+
+                    // Sending rider data back to selected grid position
+                    passSelectedRider(selectedRider);
+
                     riderPickedList.add(riderList[i]);
                     riderList.remove(i);
                   },
