@@ -18,6 +18,7 @@ import '../pick_widgets/tenth_pick.dart';
 import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
+import '../models-provider/riderModel.dart';
 
 class RiderSelectedScreen extends StatefulWidget {
   static const routeName = '/riderSelectedScreen';
@@ -27,6 +28,8 @@ class RiderSelectedScreen extends StatefulWidget {
 }
 
 class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
+  Future<void> savePicks() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +43,7 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
                     context: context,
                     builder: (_) => AlertDialog(
                           title: Text('Save Picks'),
-                          content: Text(
-                              'Are you sure? \nThis save is final!'),
+                          content: Text('Are you sure? \nThis save is final!'),
                           actions: [
                             TextButton(
                               child: Text('No'),
@@ -49,25 +51,7 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
                             ),
                             TextButton(
                               child: Text('Yes'),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    title: Text('Are you sure?'),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('No'),
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(context),
-                                      ),
-                                      TextButton(
-                                        child: Text('Yes'),
-                                        onPressed: () {},
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
+                              onPressed: () {},
                             ),
                           ],
                         ));
@@ -89,14 +73,12 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
               title: Text('Tracks'),
             ),
             InkWell(
-              child: ListTile(
-                title: Text('Logout'),
-                
-              ),
-              onTap: (){
+                child: ListTile(
+                  title: Text('Logout'),
+                ),
+                onTap: () {
                   FirebaseAuth.instance.signOut();
-                }
-            ),
+                }),
           ],
         ),
       ),
