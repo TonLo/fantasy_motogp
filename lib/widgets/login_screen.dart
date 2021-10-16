@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
-import '../models-provider/http_exception.dart';
 import '../models-provider/authenticate.dart';
 
 enum AuthMode { Signup, Login }
@@ -120,8 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    print(_authData['email']);
-    if (!_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
@@ -228,19 +226,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                 ),
-                if(_isLoading) CircularProgressIndicator(),
-                if(!_isLoading)
-                //SUBMIT BUTTON
-                ElevatedButton(
-                  child:
-                      Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Color.fromRGBO(0, 0, 0, 1),
+                if (_isLoading) CircularProgressIndicator(),
+                if (!_isLoading)
+                  //SUBMIT BUTTON
+                  ElevatedButton(
+                    child:
+                        Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromRGBO(0, 0, 0, 1),
+                      ),
                     ),
+                    onPressed: _submit,
                   ),
-                  onPressed: _submit,
-                ),
                 TextButton(
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),

@@ -1,49 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models-provider/riderModel.dart';
-import '../screens/pick_rider_screen.dart';
+import '../models-provider/grid_model.dart';
 
-class SecondPick extends StatefulWidget {
-  @override
-  _SecondPickState createState() => _SecondPickState();
-}
-
-class _SecondPickState extends State<SecondPick> {
-  int currentPick = 1;
-  String emptyPick = 'assets/images/genericPerson.png';
-  String _pickImage;
-  String _pickId;
-
-  void moveToPickRiderScreen() async {
-    await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PickRiderScreen()));
-  }
-
-  void setPickData(String image, String id) {}
+class SecondPick extends StatelessWidget {
+  static const int _gridPosition = 1;
+  static const int _points = 20;
+  String _emptyImage = 'assets/images/genericPerson.png';
 
   @override
   Widget build(BuildContext context) {
-    final Rider pickedRider = Provider.of<Rider>(context);
-    _pickId = pickedRider.id;
-    _pickImage = pickedRider.image;
-
+    GridModel fpm = Provider.of<GridModel>(context, listen: false);
     return Container(
       child: GestureDetector(
         child: Card(
           elevation: 10,
-          child: Container(
-            width: 100,
-            height: 100,
-            //Setting rider image from instantiated RiderVariable within RiderData class
-            child: _pickImage == null
-                ? Image.asset(emptyPick)
-                : Image.asset(_pickImage),
+          child: Consumer<GridModel>(
+            builder: (context, model, child) {
+              return Container(
+                  width: 100,
+                  height: 100,
+                  //Setting rider image from instantiated RiderVariable within RiderData class
+                  child: model.secondPlaceGridrider.image == null
+                      ? Image.asset(_emptyImage)
+                      : Image.asset(model.secondPlaceGridrider.image));
+            },
           ),
         ),
         onTap: () {
-          moveToPickRiderScreen();
-          setState(() {});
+          fpm.goToPickRiderScreen(context, _gridPosition);
         },
       ),
     );

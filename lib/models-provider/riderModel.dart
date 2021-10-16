@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Rider with ChangeNotifier {
   final String id;
-  final String image;
+   String image;
   final String name;
   final String team;
 

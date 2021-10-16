@@ -1,41 +1,53 @@
+
 import 'package:flutter/material.dart';
 
 import './riderModel.dart';
-import '../pick_widgets/first_pick.dart';
-import '../pick_widgets/second_pick.dart';
+import '../screens/pick_rider_screen.dart';
+import 'grid_model.dart';
 
 class CurrentGridList with ChangeNotifier {
   // List for storing rider picks
-  List<Map> finalPicksList = [];
-  FirstPick fp = new FirstPick();
-  SecondPick secondPick = SecondPick();
+  List<Map> finalGridPositionList = [];
+  //var _firstPlaceModel = FirstPlaceModel();
 
-  
+  // this will be the parent class of all the pick model classes
+  // this will hold the list of picks and in the switch statement
+  // will pass the selected rider to each corresponding pick
+
+  Future<void> goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
+    final Rider _selectedRider = await Navigator.push(
+      ctx,
+      MaterialPageRoute(builder: (context) => PickRiderScreen()),
+    );
+    
+    updateFinalPicksList(_selectedRider, gridPosition);
+  }
 
   void updateFinalPicksList(Rider rider, int gridPosition) {
     // Identifying if a rider has already been selected
-    if (finalPicksList.contains(rider.id)) {
+    if (finalGridPositionList.contains(rider.id)) {
       // Finding where on the grid the rider was selected
-      var duplicatePick =
-          finalPicksList.firstWhere((element) => element['id'] == rider.id);
+      var duplicatePick = finalGridPositionList
+          .firstWhere((element) => element['id'] == rider.id);
       // Updated where on the grid the rider has been moved
       // The index of the list stays the same but the map key is updated
       // to know where the rider is being moved
-      finalPicksList[finalPicksList.indexOf(duplicatePick)]['gridPosition'] =
-          gridPosition;
+      finalGridPositionList[finalGridPositionList.indexOf(duplicatePick)]
+          ['gridPosition'] = gridPosition;
 
       // Function for swapping the location of riders on the grid
-      swapSelectedRiderPositions(duplicatePick['gridPosition']);
+      updateSelectedRiderPositions(rider, duplicatePick['gridPosition']);
 
       //return false;
     }
-    addRiderToGridPosition(rider, gridPosition);
+    addRiderToGridPositionList(rider, gridPosition);
+    updateSelectedRiderPositions(rider, gridPosition);
 
     //return true;
   }
 
-  void addRiderToGridPosition(Rider rider, int gridPosition) {
-    finalPicksList.add({
+  void addRiderToGridPositionList(Rider rider, int gridPosition) {
+    finalGridPositionList.add({
       'id': rider.id,
       'image': rider.image,
       'name': rider.name,
@@ -44,12 +56,16 @@ class CurrentGridList with ChangeNotifier {
     });
   }
 
-  void swapSelectedRiderPositions(int gridPosition) {
+  void moveRiderToDifferentGridPosition(){
 
-    switch(gridPosition){
-      case 0: {
-        
-      }
+  }
+
+  void updateSelectedRiderPositions(Rider rider, int gridPosition) {
+    switch (gridPosition) {
+      case 0:
+        {
+          //_firstPlaceModel.updateGridRider(rider, rider.image);
+        }
     }
   }
 }
