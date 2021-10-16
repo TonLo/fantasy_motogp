@@ -12,7 +12,6 @@ import './screens/rider_selected_screen.dart';
 import './models-provider/authenticate.dart';
 import './widgets/login_screen.dart';
 import './models-provider/current_grid_list.dart';
-import './pick_widgets/first_pick.dart';
 import 'models-provider/grid_model.dart';
 
 Future<void> main(List<String> args) async {
