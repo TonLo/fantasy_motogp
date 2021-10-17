@@ -20,7 +20,6 @@ class FourthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  //Setting rider image from instantiated RiderVariable within RiderData class
                   child: model.fourthPlaceGridrider.image == null
                       ? Image.asset(_emptyImage)
                       : Image.asset(model.fourthPlaceGridrider.image));

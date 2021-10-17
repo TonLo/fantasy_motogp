@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-
 import '../screens/pick_rider_screen.dart';
 import 'riderModel.dart';
 
@@ -28,11 +27,7 @@ class GridModel extends ChangeNotifier {
       ctx,
       MaterialPageRoute(builder: (context) => PickRiderScreen()),
     );
-    //rider = _selectedRider;
-    //notifyListeners();
-    //updateRiderImage();
-    //cgl.updateFinalPicksList(_selectedRider, gridPosition);
-    //updateGridRider(_selectedRider);
+
     updateSelectedRiderPositions(_selectedRider, gridPosition);
   }
 
@@ -50,13 +45,9 @@ class GridModel extends ChangeNotifier {
 
       // Function for swapping the location of riders on the grid
       updateSelectedRiderPositions(rider, duplicatePick['gridPosition']);
-
-      //return false;
     }
     addRiderToGridPositionList(rider, gridPosition);
     updateSelectedRiderPositions(rider, gridPosition);
-
-    //return true;
   }
 
   void addRiderToGridPositionList(Rider rider, int gridPosition) {
@@ -73,7 +64,6 @@ class GridModel extends ChangeNotifier {
     switch (gridPosition) {
       case 0:
         {
-          //_firstPlaceModel.updateGridRider(rider, rider.image);
           firstPlaceGridrider = rider;
           notifyListeners();
           return;
@@ -84,79 +74,79 @@ class GridModel extends ChangeNotifier {
           notifyListeners();
           return;
         }
-        case 2:
+      case 2:
         {
           thirdPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 3:
+      case 3:
         {
           fourthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 4:
+      case 4:
         {
           fifthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 5:
+      case 5:
         {
           sixthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 6:
+      case 6:
         {
           seventhPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 7:
+      case 7:
         {
           eighthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 8:
+      case 8:
         {
           ninthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 9:
+      case 9:
         {
           tenthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 10:
+      case 10:
         {
           eleventhPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 11:
+      case 11:
         {
           twelfthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 12:
+      case 12:
         {
           thirteenthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 13:
+      case 13:
         {
           fourteenthPlaceGridrider = rider;
           notifyListeners();
           return;
         }
-        case 14:
+      case 14:
         {
           fifteenthPlaceGridrider = rider;
           notifyListeners();

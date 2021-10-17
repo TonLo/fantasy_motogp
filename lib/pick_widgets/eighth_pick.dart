@@ -20,7 +20,6 @@ class EighthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  //Setting rider image from instantiated RiderVariable within RiderData class
                   child: model.eighthPlaceGridrider.image == null
                       ? Image.asset(_emptyImage)
                       : Image.asset(model.eighthPlaceGridrider.image));

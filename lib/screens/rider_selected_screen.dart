@@ -18,7 +18,6 @@ import '../pick_widgets/tenth_pick.dart';
 import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
-import '../models-provider/riderModel.dart';
 
 class RiderSelectedScreen extends StatefulWidget {
   static const routeName = '/riderSelectedScreen';
@@ -28,8 +27,6 @@ class RiderSelectedScreen extends StatefulWidget {
 }
 
 class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
-  Future<void> savePicks() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

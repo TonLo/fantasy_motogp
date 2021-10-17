@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models-provider/riderModel.dart';
@@ -60,7 +59,7 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                         name: riderList[i]['name'],
                         team: riderList[i]['team']);
 
-                    // Sending rider data back to selected grid position
+                    // Sending selected rider to grid model
                     passSelectedRider(selectedRider);
                   },
                 ),
@@ -72,14 +71,3 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
     );
   }
 }
-
-//FutureBuilder<QuerySnapshot>(
-  //      future: teamList.get(),
-    //    builder: (context, snapshot) {
-      //    if (!snapshot.hasData) {
-        //    return Container(
-          //      alignment: Alignment.center,
-            //    child: CircularProgressIndicator());
-          //}
-          //final List riderList =
-            //    snapshot.data.docs.map((e) => e.data()).toList();

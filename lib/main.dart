@@ -6,12 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
 import './models-provider/riderModel.dart';
-import './models-provider/rider_variables.dart';
 import './screens/pick_rider_screen.dart';
 import './screens/rider_selected_screen.dart';
 import './models-provider/authenticate.dart';
 import './widgets/login_screen.dart';
-import './models-provider/current_grid_list.dart';
 import 'models-provider/grid_model.dart';
 
 Future<void> main(List<String> args) async {
@@ -26,16 +24,10 @@ class FantasyMotogp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => RiderVariables(),
-        ),
-        ChangeNotifierProvider(
           create: (ctx) => Rider(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Authenticate(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => CurrentGridList(),
         ),
         ChangeNotifierProvider<GridModel>(
           create: (ctx) => GridModel(),
