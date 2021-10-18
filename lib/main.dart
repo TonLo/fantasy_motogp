@@ -1,17 +1,16 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 import './models-provider/riderModel.dart';
-import './models-provider/rider_variables.dart';
-import './models-provider/rider_data.dart';
 import './screens/pick_rider_screen.dart';
 import './screens/rider_selected_screen.dart';
 import './models-provider/authenticate.dart';
 import './widgets/login_screen.dart';
+import 'models-provider/grid_model.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,22 +19,18 @@ Future<void> main(List<String> args) async {
 }
 
 class FantasyMotogp extends StatelessWidget {
-  //final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => RiderData(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => RiderVariables(),
-        ),
-        ChangeNotifierProvider(
           create: (ctx) => Rider(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => Authenticate(),
+        ),
+        ChangeNotifierProvider<GridModel>(
+          create: (ctx) => GridModel(),
         ),
       ],
       child: MaterialApp(
