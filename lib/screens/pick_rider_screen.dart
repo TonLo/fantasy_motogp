@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models-provider/riderModel.dart';
@@ -13,19 +14,24 @@ class PickRiderScreen extends StatefulWidget {
 }
 
 class _PickRiderScreenState extends State<PickRiderScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
-  Rider selectedRider = new Rider();
+  List<Map> riderPickedList = [];
 
-  void passSelectedRider(Rider rider) {
-    Navigator.pop(context, rider);
+  void addFirebaseListToLocalList(List list){
+    for(int i = 0; i < list.length; i++){
+      riderPickedList.addAll(list[i]);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    
+
+    Rider selectedRider = new Rider();
+
+    void passSelectedRider(Rider rider) {
+      Navigator.pop(context, rider);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -39,16 +45,19 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                 alignment: Alignment.center,
                 child: CircularProgressIndicator());
           }
+          // Reading all riders from firebase to select from
           final List riderList =
               snapshot.data.docs.map((e) => e.data()).toList();
 
+              //addFirebaseListToLocalList(riderList);
+
+          // Creating a list of riders to select
           return ListView.builder(
             itemCount: riderList.length,
             itemBuilder: (ctx, i) {
               return Card(
                 child: ListTile(
-                  leading:
-                      Image.asset('${riderList[i]['image']}'),
+                  leading: Image.asset('${riderList[i]['image']}'),
                   title: Text(
                     '${riderList[i]['name']}',
                   ),
@@ -58,9 +67,12 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                         id: riderList[i]['id'],
                         name: riderList[i]['name'],
                         team: riderList[i]['team']);
-
-                    // Sending selected rider to grid model
+                      print(riderPickedList);
+                    // Sending rider data back to selected grid position
                     passSelectedRider(selectedRider);
+
+                    riderPickedList.add(riderList[i]);
+                    riderList.remove(i);
                   },
                 ),
               );

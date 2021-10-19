@@ -12,8 +12,10 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-
+    // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
+    // transformConfig.translate(-10.0);
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           Container(
@@ -117,7 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    if (_formKey.currentState.validate()) {
+    print(_authData['email']);
+    if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
@@ -224,19 +227,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                 ),
-                if (_isLoading) CircularProgressIndicator(),
-                if (!_isLoading)
-                  //SUBMIT BUTTON
-                  ElevatedButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color.fromRGBO(0, 0, 0, 1),
-                      ),
+                if(_isLoading) CircularProgressIndicator(),
+                if(!_isLoading)
+                //SUBMIT BUTTON
+                ElevatedButton(
+                  child:
+                      Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Color.fromRGBO(0, 0, 0, 1),
                     ),
-                    onPressed: _submit,
                   ),
+                  onPressed: _submit,
+                ),
                 TextButton(
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
