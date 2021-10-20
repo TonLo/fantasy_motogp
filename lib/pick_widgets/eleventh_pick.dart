@@ -20,9 +20,9 @@ class EleventhPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.eleventhPlaceGridrider.image == null
+                  child: model.eleventhPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.eleventhPlaceGridrider.image));
+                      : Image.asset(model.eleventhPlaceGridRider.image));
             },
           ),
         ),

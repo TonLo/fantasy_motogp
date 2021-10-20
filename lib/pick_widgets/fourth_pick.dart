@@ -20,9 +20,9 @@ class FourthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.fourthPlaceGridrider.image == null
+                  child: model.fourthPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.fourthPlaceGridrider.image));
+                      : Image.asset(model.fourthPlaceGridRider.image));
             },
           ),
         ),

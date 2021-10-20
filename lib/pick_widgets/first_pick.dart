@@ -21,9 +21,9 @@ class FirstPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: _model.firstPlaceGridrider.image == null
+                  child: _model.firstPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(_model.firstPlaceGridrider.image));
+                      : Image.asset(_model.firstPlaceGridRider.image));
             },
           ),
         ),

@@ -6,29 +6,33 @@ import '../screens/pick_rider_screen.dart';
 import 'riderModel.dart';
 
 class GridModel extends ChangeNotifier {
-  Rider firstPlaceGridrider = Rider();
-  Rider secondPlaceGridrider = Rider();
-  Rider thirdPlaceGridrider = Rider();
-  Rider fourthPlaceGridrider = Rider();
-  Rider fifthPlaceGridrider = Rider();
-  Rider sixthPlaceGridrider = Rider();
-  Rider seventhPlaceGridrider = Rider();
-  Rider eighthPlaceGridrider = Rider();
-  Rider ninthPlaceGridrider = Rider();
-  Rider tenthPlaceGridrider = Rider();
-  Rider eleventhPlaceGridrider = Rider();
-  Rider twelfthPlaceGridrider = Rider();
-  Rider thirteenthPlaceGridrider = Rider();
-  Rider fourteenthPlaceGridrider = Rider();
-  Rider fifteenthPlaceGridrider = Rider();
+  Rider firstPlaceGridRider = Rider();
+  Rider secondPlaceGridRider = Rider();
+  Rider thirdPlaceGridRider = Rider();
+  Rider fourthPlaceGridRider = Rider();
+  Rider fifthPlaceGridRider = Rider();
+  Rider sixthPlaceGridRider = Rider();
+  Rider seventhPlaceGridRider = Rider();
+  Rider eighthPlaceGridRider = Rider();
+  Rider ninthPlaceGridRider = Rider();
+  Rider tenthPlaceGridRider = Rider();
+  Rider eleventhPlaceGridRider = Rider();
+  Rider twelfthPlaceGridRider = Rider();
+  Rider thirteenthPlaceGridRider = Rider();
+  Rider fourteenthPlaceGridRider = Rider();
+  Rider fifteenthPlaceGridRider = Rider();
+  Rider _emptyRider = Rider();
+  Rider _oldRider = Rider();
 
-  var finalGridPositionList = List<Rider>.generate(15, (index) => Rider());
+  var finalGridPositionList =
+      List<Rider>.generate(15, (index) => Rider(), growable: true);
 
   void goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
     Rider _selectedRider = await Navigator.push(
       ctx,
       MaterialPageRoute(builder: (context) => PickRiderScreen()),
     );
+    
     addRiderToGridPositionList(_selectedRider, gridPosition);
     //updateSelectedRiderPositions(_selectedRider, gridPosition);
   }
@@ -37,22 +41,41 @@ class GridModel extends ChangeNotifier {
   int getCurrentRiderGridPosition(Rider rider) =>
       finalGridPositionList.indexOf(rider);
 
-  void removeGridSpotImage(Rider rider) {
-    updateSelectedRiderPositions(rider, rider.gridPosition, true);
+  void removeGridSpotImage() {
+    updateSelectedRiderPositions(_oldRider, _oldRider.gridPosition, true);
   }
 
-  void removeRiderFromGridPositionList(Rider rider) {
-    finalGridPositionList.removeAt(rider.gridPosition);
+  void removeRiderFromGridPositionList() {
+    //finalGridPositionList.removeAt(_oldRider.gridPosition);
+    finalGridPositionList.setAll(_oldRider.gridPosition, [_emptyRider]);
+  }
+
+  void identifyOldRiderPosition(Rider rider) {
+    final index = finalGridPositionList.indexWhere((e) => e.id == rider.id);
+    _oldRider = finalGridPositionList[index];
+    //_oldRider = rider;
+  }
+
+  bool containsRider(Rider rider) {
+    final conatinsRider = finalGridPositionList.where((e) => e.id == rider.id);
+
+    if (conatinsRider.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   void addRiderToGridPositionList(Rider rider, int gridPosition) {
-    if (finalGridPositionList.contains(rider)) {
-      removeRiderFromGridPositionList(rider);
-      removeGridSpotImage(rider);
+    if (containsRider(rider) == true) {
+      identifyOldRiderPosition(rider);
+      removeRiderFromGridPositionList();
+      removeGridSpotImage();
     }
     rider.gridPosition = gridPosition;
     finalGridPositionList.setAll(gridPosition, [rider]);
     updateSelectedRiderPositions(rider, gridPosition, false);
+    _oldRider = _emptyRider;
     print(finalGridPositionList[gridPosition].name);
     // finalGridPositionList.add({
     //   'id': rider.id,
@@ -82,122 +105,180 @@ class GridModel extends ChangeNotifier {
       case 0:
         {
           if (onGrid) {
-            firstPlaceGridrider.image = 'assets/images/genericPerson.png';
+            firstPlaceGridRider.image = 'assets/images/genericPerson.png';
             notifyListeners();
             return;
           }
-          firstPlaceGridrider = rider;
-          firstPlaceGridrider.gridPosition = gridPosition;
+          firstPlaceGridRider = rider;
+          firstPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 1:
         {
           if (onGrid) {
-            secondPlaceGridrider.image = 'assets/images/genericPerson.png';
+            secondPlaceGridRider.image = 'assets/images/genericPerson.png';
             notifyListeners();
             return;
           }
-          secondPlaceGridrider = rider;
+          secondPlaceGridRider = rider;
+          secondPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 2:
         {
           if (onGrid) {
-            thirdPlaceGridrider.image = 'assets/images/genericPerson.png';
+            thirdPlaceGridRider.image = 'assets/images/genericPerson.png';
             notifyListeners();
             return;
           }
-          thirdPlaceGridrider = rider;
+          thirdPlaceGridRider = rider;
+          thirdPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 3:
         {
           if (onGrid) {
-            fourthPlaceGridrider.image = 'assets/images/genericPerson.png';
+            fourthPlaceGridRider.image = 'assets/images/genericPerson.png';
             notifyListeners();
             return;
           }
-          fourthPlaceGridrider = rider;
+          fourthPlaceGridRider = rider;
+          fourthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 4:
         {
-          if (onGrid) {}
-          fifthPlaceGridrider = rider;
+          if (onGrid) {
+            fifthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          fifthPlaceGridRider = rider;
+          fifthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 5:
         {
-          if (onGrid) {}
-          sixthPlaceGridrider = rider;
+          if (onGrid) {
+            sixthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          sixthPlaceGridRider = rider;
+          sixthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 6:
         {
-          if (onGrid) {}
-          seventhPlaceGridrider = rider;
+          if (onGrid) {
+            seventhPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          seventhPlaceGridRider = rider;
+          seventhPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 7:
         {
-          if (onGrid) {}
-          eighthPlaceGridrider = rider;
+          if (onGrid) {
+            eighthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          eighthPlaceGridRider = rider;
+          eighthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 8:
         {
-          if (onGrid) {}
-          ninthPlaceGridrider = rider;
+          if (onGrid) {
+            ninthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          ninthPlaceGridRider = rider;
+          ninthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 9:
         {
-          if (onGrid) {}
-          tenthPlaceGridrider = rider;
+          if (onGrid) {
+            tenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          tenthPlaceGridRider = rider;
+          tenthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 10:
         {
-          if (onGrid) {}
-          eleventhPlaceGridrider = rider;
+          if (onGrid) {
+            eleventhPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          eleventhPlaceGridRider = rider;
+          eleventhPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 11:
         {
-          if (onGrid) {}
-          twelfthPlaceGridrider = rider;
+          if (onGrid) {
+            twelfthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          twelfthPlaceGridRider = rider;
+          twelfthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 12:
         {
-          if (onGrid) {}
-          thirteenthPlaceGridrider = rider;
+          if (onGrid) {
+            thirteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          thirteenthPlaceGridRider = rider;
+          thirteenthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 13:
         {
-          if (onGrid) {}
-          fourteenthPlaceGridrider = rider;
+          if (onGrid) {
+            fourteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          fourteenthPlaceGridRider = rider;
+          fourteenthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }
       case 14:
         {
-          if (onGrid) {}
-          fifteenthPlaceGridrider = rider;
+          if (onGrid) {
+            fifteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            notifyListeners();
+            return;
+          }
+          fifteenthPlaceGridRider = rider;
+          fifteenthPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
           return;
         }

@@ -20,9 +20,9 @@ class NinthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.ninthPlaceGridrider.image == null
+                  child: model.ninthPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.ninthPlaceGridrider.image));
+                      : Image.asset(model.ninthPlaceGridRider.image));
             },
           ),
         ),

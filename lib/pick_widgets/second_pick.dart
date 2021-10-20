@@ -20,9 +20,9 @@ class SecondPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.secondPlaceGridrider.image == null
+                  child: model.secondPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.secondPlaceGridrider.image));
+                      : Image.asset(model.secondPlaceGridRider.image));
             },
           ),
         ),

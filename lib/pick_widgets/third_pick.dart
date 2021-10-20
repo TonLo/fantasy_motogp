@@ -20,9 +20,9 @@ class ThirdPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.thirdPlaceGridrider.image == null
+                  child: model.thirdPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.thirdPlaceGridrider.image));
+                      : Image.asset(model.thirdPlaceGridRider.image));
             },
           ),
         ),

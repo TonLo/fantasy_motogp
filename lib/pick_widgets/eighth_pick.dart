@@ -20,9 +20,9 @@ class EighthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.eighthPlaceGridrider.image == null
+                  child: model.eighthPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.eighthPlaceGridrider.image));
+                      : Image.asset(model.eighthPlaceGridRider.image));
             },
           ),
         ),

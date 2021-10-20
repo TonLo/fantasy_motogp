@@ -14,19 +14,16 @@ class PickRiderScreen extends StatefulWidget {
 }
 
 class _PickRiderScreenState extends State<PickRiderScreen> {
-
   List<Map> riderPickedList = [];
 
-  void addFirebaseListToLocalList(List list){
-    for(int i = 0; i < list.length; i++){
+  void addFirebaseListToLocalList(List list) {
+    for (int i = 0; i < list.length; i++) {
       riderPickedList.addAll(list[i]);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     Rider selectedRider = new Rider();
 
     void passSelectedRider(Rider rider) {
@@ -49,7 +46,7 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
           final List riderList =
               snapshot.data.docs.map((e) => e.data()).toList();
 
-              //addFirebaseListToLocalList(riderList);
+          //addFirebaseListToLocalList(riderList);
 
           // Creating a list of riders to select
           return ListView.builder(
@@ -67,12 +64,9 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                         id: riderList[i]['id'],
                         name: riderList[i]['name'],
                         team: riderList[i]['team']);
-                      print(riderPickedList);
+                    print(riderPickedList);
                     // Sending rider data back to selected grid position
                     passSelectedRider(selectedRider);
-
-                    riderPickedList.add(riderList[i]);
-                    riderList.remove(i);
                   },
                 ),
               );

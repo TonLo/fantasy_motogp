@@ -20,9 +20,9 @@ class SeventhPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.seventhPlaceGridrider.image == null
+                  child: model.seventhPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.seventhPlaceGridrider.image));
+                      : Image.asset(model.seventhPlaceGridRider.image));
             },
           ),
         ),
