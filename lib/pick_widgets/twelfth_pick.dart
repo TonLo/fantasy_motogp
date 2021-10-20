@@ -5,7 +5,7 @@ import '../models-provider/grid_model.dart';
 
 class TwelfthPick extends StatelessWidget {
   static const int _gridPosition = 11;
-  static const int _points = 20;
+  static const int _points = 5;
   String _emptyImage = 'assets/images/genericPerson.png';
 
   @override
