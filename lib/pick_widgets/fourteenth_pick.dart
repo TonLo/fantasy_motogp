@@ -5,7 +5,7 @@ import '../models-provider/grid_model.dart';
 
 class FourteenthPick extends StatelessWidget {
   static const int _gridPosition = 13;
-  static const int _points = 20;
+  static const int _points = 5;
   String _emptyImage = 'assets/images/genericPerson.png';
 
   @override
@@ -20,9 +20,9 @@ class FourteenthPick extends StatelessWidget {
               return Container(
                   width: 100,
                   height: 100,
-                  child: model.fourteenthPlaceGridrider.image == null
+                  child: model.fourteenthPlaceGridRider.image == null
                       ? Image.asset(_emptyImage)
-                      : Image.asset(model.fourteenthPlaceGridrider.image));
+                      : Image.asset(model.fourteenthPlaceGridRider.image));
             },
           ),
         ),
