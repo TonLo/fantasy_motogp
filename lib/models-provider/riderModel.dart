@@ -7,18 +7,13 @@ class Rider with ChangeNotifier {
   String name;
   String team;
   int gridPosition;
+  double points;
 
-  set riderId(String riderId){
-    id = riderId;
-  }
-
-  Rider({
-    this.id,
-    this.image,
-    this.name,
-    this.team,
-    this.gridPosition
-  });
-
-  
+  Rider(
+      {this.id,
+      this.image,
+      this.name,
+      this.team,
+      this.gridPosition,
+      this.points});
 }
