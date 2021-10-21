@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl_standalone.dart';
 
 import '../screens/pick_rider_screen.dart';
 import 'riderModel.dart';
+import 'grid_points.dart';
 
 class GridModel extends ChangeNotifier {
   Rider firstPlaceGridRider = Rider();
@@ -23,42 +23,54 @@ class GridModel extends ChangeNotifier {
   Rider fifteenthPlaceGridRider = Rider();
   Rider _emptyRider = Rider();
   Rider _oldRider = Rider();
+  GridPoints gridPoints = GridPoints();
 
+  // List for all selected riders
   var finalGridPositionList =
       List<Rider>.generate(15, (index) => Rider(), growable: true);
 
+  // Go to PickRiderScreen and retrieve selected rider and
+  // add selected rider to the grid
   void goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
     Rider _selectedRider = await Navigator.push(
       ctx,
       MaterialPageRoute(builder: (context) => PickRiderScreen()),
     );
-    
+    // Sends currently selected rider and grid position data
     addRiderToGridPositionList(_selectedRider, gridPosition);
-    //updateSelectedRiderPositions(_selectedRider, gridPosition);
   }
 
-  // Returns a the
-  int getCurrentRiderGridPosition(Rider rider) =>
-      finalGridPositionList.indexOf(rider);
-
+  // Changed the grid position variable's image to and empty rider image
+  // Grid position variable is mainly created to hold the rider image and
+  // will technically still be holding all the information of the previously
+  // selected rider after method execution, the previously selected rider will
+  // simply have the image updated to empty rider
   void removeGridSpotImage() {
     updateSelectedRiderPositions(_oldRider, _oldRider.gridPosition, true);
   }
 
+  // Removes rider from old grid position if they were previously selected
+  // and are now being moved to a new position
   void removeRiderFromGridPositionList() {
-    //finalGridPositionList.removeAt(_oldRider.gridPosition);
+    // Sets the rider at this specific index to an empty rider...all null values
     finalGridPositionList.setAll(_oldRider.gridPosition, [_emptyRider]);
   }
 
+  // If a rider was previously selected and is now being moved to a different
+  // position on the grid, this method will identify where the old position was.
+  // With the previous position identified the list can be updated to remove this rider
+  // from the previous position
   void identifyOldRiderPosition(Rider rider) {
     final index = finalGridPositionList.indexWhere((e) => e.id == rider.id);
+    // Updating _oldRider variable with the currently selected rider's previous
+    // position values
     _oldRider = finalGridPositionList[index];
-    //_oldRider = rider;
   }
 
+  // Check if the currently selected rider has previously been selected in a
+  // different grid spot
   bool containsRider(Rider rider) {
     final conatinsRider = finalGridPositionList.where((e) => e.id == rider.id);
-
     if (conatinsRider.isEmpty) {
       return false;
     } else {
@@ -66,6 +78,9 @@ class GridModel extends ChangeNotifier {
     }
   }
 
+  // Method that calls all other methods to update grid postions and images correctly
+  // This method also adds a rider that has been selected for the first time to the 
+  // grid list
   void addRiderToGridPositionList(Rider rider, int gridPosition) {
     if (containsRider(rider) == true) {
       identifyOldRiderPosition(rider);
@@ -73,42 +88,28 @@ class GridModel extends ChangeNotifier {
       removeGridSpotImage();
     }
     rider.gridPosition = gridPosition;
+    // Adding rider to the selected grid position
     finalGridPositionList.setAll(gridPosition, [rider]);
     updateSelectedRiderPositions(rider, gridPosition, false);
+    // Resetting _oldRider variable to prevent accidental data mixing
     _oldRider = _emptyRider;
-    print(finalGridPositionList[gridPosition].name);
-    // finalGridPositionList.add({
-    //   'id': rider.id,
-    //   'image': rider.image,
-    //   'name': rider.name,
-    //   'team': rider.team,
-    //   'gridPosition': gridPosition
-    // });
-    // finalGridPositionList.setRange(
-    //   gridPosition,
-    //   gridPosition,
-    //   [
-    //     {
-    //       'id': rider.id,
-    //       'name': rider.name,
-    //       'image': rider.image,
-    //       'team': rider.team,
-    //       'gridPosition': rider.gridPosition
-    //     }
-    //   ],
-    // );
   }
 
+  // Switch to identify which position is being updated with which rider data
   void updateSelectedRiderPositions(
       Rider rider, int gridPosition, bool onGrid) {
     switch (gridPosition) {
       case 0:
         {
+          // If rider was previously selected at another grid position onGrid will
+          // be true and will change the rider image to an empty rider.
           if (onGrid) {
             firstPlaceGridRider.image = 'assets/images/genericPerson.png';
             notifyListeners();
             return;
           }
+          // Update rider image and their grid position, updating position variables
+          // grid position may not be necessary
           firstPlaceGridRider = rider;
           firstPlaceGridRider.gridPosition = gridPosition;
           notifyListeners();
