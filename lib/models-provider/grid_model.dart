@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import '../screens/pick_rider_screen.dart';
+import '../screens/select_rider_screen.dart';
 import 'riderModel.dart';
 import 'grid_points.dart';
 
@@ -34,7 +34,7 @@ class GridModel extends ChangeNotifier {
   void goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
     Rider _selectedRider = await Navigator.push(
       ctx,
-      MaterialPageRoute(builder: (context) => PickRiderScreen()),
+      MaterialPageRoute(builder: (context) => SelectRiderScreen()),
     );
     // Sends currently selected rider and grid position data
     addRiderToGridPositionList(_selectedRider, gridPosition);

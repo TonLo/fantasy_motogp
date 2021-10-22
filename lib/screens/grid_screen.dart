@@ -19,14 +19,19 @@ import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
 
-class RiderSelectedScreen extends StatefulWidget {
+class GridScreen extends StatefulWidget {
   static const routeName = '/riderSelectedScreen';
 
   @override
-  _RiderSelectedScreenState createState() => _RiderSelectedScreenState();
+  _GridScreenState createState() => _GridScreenState();
 }
 
-class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
+class _GridScreenState extends State<GridScreen> {
+  bool lockRiderPicks = false;
+
+  void submitPicks() {
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +53,7 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
                             ),
                             TextButton(
                               child: Text('Yes'),
-                              onPressed: () {},
+                              onPressed: submitPicks,
                             ),
                           ],
                         ));

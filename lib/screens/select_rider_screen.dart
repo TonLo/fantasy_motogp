@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models-provider/riderModel.dart';
 
 final teamList = FirebaseFirestore.instance.collection('riders');
 
-class PickRiderScreen extends StatefulWidget {
+class SelectRiderScreen extends StatefulWidget {
   static const routeName = '/pickRiderScreen';
 
   @override
-  _PickRiderScreenState createState() => _PickRiderScreenState();
+  _SelectRiderScreenState createState() => _SelectRiderScreenState();
 }
 
-class _PickRiderScreenState extends State<PickRiderScreen> {
+class _SelectRiderScreenState extends State<SelectRiderScreen> {
   List<Map> riderPickedList = [];
 
   void addFirebaseListToLocalList(List list) {
@@ -42,11 +41,12 @@ class _PickRiderScreenState extends State<PickRiderScreen> {
                 alignment: Alignment.center,
                 child: CircularProgressIndicator());
           }
+          if(snapshot.hasError){
+            print(snapshot.error.toString());
+          }
           // Reading all riders from firebase to select from
           final List riderList =
               snapshot.data.docs.map((e) => e.data()).toList();
-
-          //addFirebaseListToLocalList(riderList);
 
           // Creating a list of riders to select
           return ListView.builder(
