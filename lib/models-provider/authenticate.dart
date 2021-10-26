@@ -26,4 +26,8 @@ class Authenticate with ChangeNotifier {
   Future<void> signUp(String email, String password) {
     return _authenticate(email, password, "signUp");
   }
+
+  String getUser()  {
+    return auth.currentUser.uid;
+  }
 }

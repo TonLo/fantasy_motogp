@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models-provider/riderModel.dart';
 
-final teamList = FirebaseFirestore.instance.collection('riders');
+
 
 class SelectRiderScreen extends StatefulWidget {
   static const routeName = '/pickRiderScreen';
@@ -14,6 +14,7 @@ class SelectRiderScreen extends StatefulWidget {
 
 class _SelectRiderScreenState extends State<SelectRiderScreen> {
   List<Map> riderPickedList = [];
+  final teamList = FirebaseFirestore.instance.collection('riders');
 
   void addFirebaseListToLocalList(List list) {
     for (int i = 0; i < list.length; i++) {

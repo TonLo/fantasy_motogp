@@ -30,6 +30,10 @@ class FirstPick extends StatelessWidget {
         onTap: () {
           gridModelProvider.goToPickRiderScreen(context, _gridPosition);
         },
+        onLongPress: () {
+          gridModelProvider
+              .removeSelectedRiderWithoutReplacement(_gridPosition);
+        },
       ),
     );
   }

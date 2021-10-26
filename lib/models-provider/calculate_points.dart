@@ -1,4 +1,6 @@
-class GridPoints {
+import 'package:flutter/material.dart';
+
+class CalculatePoints extends ChangeNotifier{
   final double first = 25;
   final double second = 20;
   final double third = 16;

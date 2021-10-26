@@ -6,11 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
 import './models-provider/riderModel.dart';
-import './screens/pick_rider_screen.dart';
-import './screens/rider_selected_screen.dart';
+import './screens/select_rider_screen.dart';
+import './screens/grid_screen.dart';
 import './models-provider/authenticate.dart';
 import './widgets/login_screen.dart';
-import 'models-provider/grid_model.dart';
+import './models-provider/grid_model.dart';
+import './models-provider/calculate_points.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,9 @@ class FantasyMotogp extends StatelessWidget {
         ChangeNotifierProvider<GridModel>(
           create: (ctx) => GridModel(),
         ),
+        ChangeNotifierProvider<CalculatePoints>(
+          create: (ctx) => CalculatePoints(),
+        ),
       ],
       child: MaterialApp(
         title: 'FantasyGP',
@@ -44,12 +48,12 @@ class FantasyMotogp extends StatelessWidget {
               if (!userSnapshot.hasData) {
                 return AuthScreen();
               }
-              return RiderSelectedScreen();
+              return GridScreen();
             }),
         routes: {
-          PickRiderScreen.routeName: (BuildContext ctx) => PickRiderScreen(),
-          RiderSelectedScreen.routeName: (BuildContext ctx) =>
-              RiderSelectedScreen(),
+          SelectRiderScreen.routeName: (BuildContext ctx) => SelectRiderScreen(),
+          GridScreen.routeName: (BuildContext ctx) =>
+              GridScreen(),
         },
       ),
     );

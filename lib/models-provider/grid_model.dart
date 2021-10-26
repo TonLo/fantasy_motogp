@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../screens/select_rider_screen.dart';
 import 'riderModel.dart';
-import 'grid_points.dart';
+import 'calculate_points.dart';
 
 class GridModel extends ChangeNotifier {
   Rider firstPlaceGridRider = Rider();
@@ -23,7 +23,7 @@ class GridModel extends ChangeNotifier {
   Rider fifteenthPlaceGridRider = Rider();
   Rider _emptyRider = Rider();
   Rider _oldRider = Rider();
-  GridPoints gridPoints = GridPoints();
+  CalculatePoints gridPoints = CalculatePoints();
 
   // List for all selected riders
   var finalGridPositionList =
@@ -79,7 +79,7 @@ class GridModel extends ChangeNotifier {
   }
 
   // Method that calls all other methods to update grid postions and images correctly
-  // This method also adds a rider that has been selected for the first time to the 
+  // This method also adds a rider that has been selected for the first time to the
   // grid list
   void addRiderToGridPositionList(Rider rider, int gridPosition) {
     if (containsRider(rider) == true) {
@@ -93,6 +93,10 @@ class GridModel extends ChangeNotifier {
     updateSelectedRiderPositions(rider, gridPosition, false);
     // Resetting _oldRider variable to prevent accidental data mixing
     _oldRider = _emptyRider;
+  }
+
+  void removeSelectedRiderWithoutReplacement(int gridPosition) {
+    updateSelectedRiderPositions(null, gridPosition, true);
   }
 
   // Switch to identify which position is being updated with which rider data
@@ -284,5 +288,23 @@ class GridModel extends ChangeNotifier {
           return;
         }
     }
+  }
+
+  void finalizePoints() {
+    finalGridPositionList[0].points = gridPoints.first;
+    finalGridPositionList[1].points = gridPoints.second;
+    finalGridPositionList[2].points = gridPoints.third;
+    finalGridPositionList[3].points = gridPoints.fourth;
+    finalGridPositionList[4].points = gridPoints.fifth;
+    finalGridPositionList[5].points = gridPoints.sixth;
+    finalGridPositionList[6].points = gridPoints.seventh;
+    finalGridPositionList[7].points = gridPoints.eighth;
+    finalGridPositionList[8].points = gridPoints.ninth;
+    finalGridPositionList[9].points = gridPoints.tenth;
+    finalGridPositionList[10].points = gridPoints.eleventh;
+    finalGridPositionList[11].points = gridPoints.twelfth;
+    finalGridPositionList[12].points = gridPoints.thirteenth;
+    finalGridPositionList[13].points = gridPoints.fourteenth;
+    finalGridPositionList[14].points = gridPoints.fifteenth;
   }
 }
