@@ -45,17 +45,18 @@ class _GridScreenState extends State<GridScreen> {
   void submitPicks(GridModel gm) {
     gridModel.finalizePoints();
     retrieveFinalResults();
-    savePicksToServer(gm);
+    _savePicksToServer(gm);
   }
 
-  void savePicksToServer(GridModel gm) async {
+  Future<void> _savePicksToServer(GridModel gm) async {
     _currentUserUid = auth.getUser();
-    final firestoreUser = await FirebaseFirestore.instance
+
+    final userDocs = FirebaseFirestore.instance
         .collection('users')
         .doc(_currentUserUid)
         .collection('picks')
-        .doc('grandPrixOfQatar')
-        .set({
+        .doc('grandPrixOfQatar');
+    userDocs.set({
       '0': gm.finalGridPositionList[0].id,
       '1': gm.finalGridPositionList[1].id,
       '2': gm.finalGridPositionList[2].id,
@@ -110,6 +111,7 @@ class _GridScreenState extends State<GridScreen> {
                               child: Text('Yes'),
                               onPressed: () {
                                 submitPicks(gridModelProvider);
+                                Navigator.pop(context);
                               },
                             ),
                           ],
