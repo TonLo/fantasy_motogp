@@ -5,7 +5,7 @@ import '../screens/select_rider_screen.dart';
 import 'riderModel.dart';
 import 'calculate_points.dart';
 
-class GridModel extends ChangeNotifier {
+class GridProvider extends ChangeNotifier {
   Rider firstPlaceGridRider = Rider();
   Rider secondPlaceGridRider = Rider();
   Rider thirdPlaceGridRider = Rider();

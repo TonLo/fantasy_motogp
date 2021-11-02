@@ -10,7 +10,7 @@ import './screens/select_rider_screen.dart';
 import './screens/grid_screen.dart';
 import './models-provider/authenticate.dart';
 import './widgets/login_screen.dart';
-import './models-provider/grid_model.dart';
+import 'models-provider/grid_provider.dart';
 import './models-provider/calculate_points.dart';
 
 Future<void> main(List<String> args) async {
@@ -30,8 +30,8 @@ class FantasyMotogp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Authenticate(),
         ),
-        ChangeNotifierProvider<GridModel>(
-          create: (ctx) => GridModel(),
+        ChangeNotifierProvider<GridProvider>(
+          create: (ctx) => GridProvider(),
         ),
         ChangeNotifierProvider<CalculatePoints>(
           create: (ctx) => CalculatePoints(),

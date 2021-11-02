@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models-provider/grid_model.dart';
+import '../models-provider/grid_provider.dart';
 
 class SeventhPick extends StatelessWidget {
   static const int _gridPosition = 6;
@@ -10,12 +10,12 @@ class SeventhPick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GridModel fpm = Provider.of<GridModel>(context, listen: false);
+    GridProvider _gridProvider = Provider.of<GridProvider>(context, listen: false);
     return Container(
       child: GestureDetector(
         child: Card(
           elevation: 10,
-          child: Consumer<GridModel>(
+          child: Consumer<GridProvider>(
             builder: (context, model, child) {
               return Container(
                   width: 100,
@@ -27,7 +27,7 @@ class SeventhPick extends StatelessWidget {
           ),
         ),
         onTap: () {
-          fpm.goToPickRiderScreen(context, _gridPosition);
+          _gridProvider.goToPickRiderScreen(context, _gridPosition);
         },
       ),
     );

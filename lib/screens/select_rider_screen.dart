@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models-provider/riderModel.dart';
 
-
-
 class SelectRiderScreen extends StatefulWidget {
   static const routeName = '/pickRiderScreen';
 
@@ -13,23 +11,15 @@ class SelectRiderScreen extends StatefulWidget {
 }
 
 class _SelectRiderScreenState extends State<SelectRiderScreen> {
-  List<Map> riderPickedList = [];
   final teamList = FirebaseFirestore.instance.collection('riders');
+  Rider selectedRider = new Rider();
 
-  void addFirebaseListToLocalList(List list) {
-    for (int i = 0; i < list.length; i++) {
-      riderPickedList.addAll(list[i]);
-    }
+  void passSelectedRider(Rider rider) {
+    Navigator.pop(context, rider);
   }
 
   @override
   Widget build(BuildContext context) {
-    Rider selectedRider = new Rider();
-
-    void passSelectedRider(Rider rider) {
-      Navigator.pop(context, rider);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Rider'),
@@ -42,7 +32,7 @@ class _SelectRiderScreenState extends State<SelectRiderScreen> {
                 alignment: Alignment.center,
                 child: CircularProgressIndicator());
           }
-          if(snapshot.hasError){
+          if (snapshot.hasError) {
             print(snapshot.error.toString());
           }
           // Reading all riders from firebase to select from
@@ -65,7 +55,6 @@ class _SelectRiderScreenState extends State<SelectRiderScreen> {
                         id: riderList[i]['id'],
                         name: riderList[i]['name'],
                         team: riderList[i]['team']);
-                    print(riderPickedList);
                     // Sending rider data back to selected grid position
                     passSelectedRider(selectedRider);
                   },

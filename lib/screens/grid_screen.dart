@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fantasy_motogp/models-provider/firebase_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ import '../pick_widgets/tenth_pick.dart';
 import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
-import '../models-provider/grid_model.dart';
+import '../models-provider/grid_provider.dart';
 import '../models-provider/calculate_points.dart';
 import '../models-provider/authenticate.dart';
 
@@ -32,53 +33,29 @@ class GridScreen extends StatefulWidget {
 }
 
 class _GridScreenState extends State<GridScreen> {
+  int _selectedIndex = 0;
   DocumentSnapshot
       finalResults; //= FirebaseFirestore.instance.collection('results');
   bool lockRiderPicks = false;
-  GridModel gridModel = GridModel();
+  GridProvider gridProvider = GridProvider();
   CalculatePoints gridPoints = CalculatePoints();
   Authenticate auth = Authenticate();
   Map finalResultsData = Map();
   List finalResultsList = List.generate(15, (index) => [], growable: true);
   var _currentUserUid;
 
-  void submitPicks(GridModel gm) {
-    gridModel.finalizePoints();
+  void _submitPicks() {
+    gridProvider.finalizePoints();
     retrieveFinalResults();
-    _savePicksToServer(gm);
+    Provider.of<FirebaseActions>(context, listen: false).savePicksToServer(context);
   }
 
-  Future<void> _savePicksToServer(GridModel gm) async {
-    _currentUserUid = auth.getUser();
-
-    final userDocs = FirebaseFirestore.instance
-        .collection('users')
-        .doc(_currentUserUid)
-        .collection('picks')
-        .doc('grandPrixOfQatar');
-    userDocs.set({
-      '0': gm.finalGridPositionList[0].id,
-      '1': gm.finalGridPositionList[1].id,
-      '2': gm.finalGridPositionList[2].id,
-      '3': gm.finalGridPositionList[3].id,
-      '4': gm.finalGridPositionList[4].id,
-      '5': gm.finalGridPositionList[5].id,
-      '6': gm.finalGridPositionList[6].id,
-      '7': gm.finalGridPositionList[7].id,
-      '8': gm.finalGridPositionList[8].id,
-      '9': gm.finalGridPositionList[9].id,
-      '10': gm.finalGridPositionList[10].id,
-      '11': gm.finalGridPositionList[11].id,
-      '12': gm.finalGridPositionList[12].id,
-      '13': gm.finalGridPositionList[13].id,
-      '14': gm.finalGridPositionList[14].id,
-    });
-  }
+  
 
   void retrieveFinalResults() async {
     finalResults = await FirebaseFirestore.instance
-        .collection('results')
-        .doc('grandPrixOfQatar')
+        .collection('2021Results')
+        .doc('round1')
         .get();
 
     finalResultsData = finalResults.data();
@@ -86,10 +63,16 @@ class _GridScreenState extends State<GridScreen> {
         finalResultsList.setAll(int.parse(element.key), [element.value]));
   }
 
+  void _navBarTappedItem(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    GridModel gridModelProvider =
-        Provider.of<GridModel>(context, listen: false);
+    GridProvider gridModelProvider =
+        Provider.of<GridProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Picked Riders'),
@@ -108,12 +91,11 @@ class _GridScreenState extends State<GridScreen> {
                               onPressed: () => Navigator.pop(context),
                             ),
                             TextButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                submitPicks(gridModelProvider);
-                                Navigator.pop(context);
-                              },
-                            ),
+                                child: Text('Yes'),
+                                onPressed: () {
+                                  _submitPicks();
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ));
               })
@@ -142,6 +124,27 @@ class _GridScreenState extends State<GridScreen> {
                 }),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.grid_view_rounded),
+              label: 'Grid',
+              backgroundColor: Colors.white),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined),
+              label: 'My Results',
+              backgroundColor: Colors.white),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.leaderboard),
+              label: 'Leaderboard',
+              backgroundColor: Colors.white),
+        ],
+        backgroundColor: Colors.black38,
+        selectedItemColor: Colors.amber[900],
+        unselectedItemColor: Colors.white,
+        currentIndex: _selectedIndex,
+        onTap: _navBarTappedItem,
       ),
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       body: ListView(
