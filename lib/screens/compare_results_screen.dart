@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
-class name extends StatelessWidget {
-  const name({Key key}) : super(key: key);
+class CompareResultsScreen extends StatefulWidget {
+  static const routeName = '/CompareResultsScreen';
+  @override
+  _CompareResultsScreenState createState() => _CompareResultsScreenState();
+}
 
+class _CompareResultsScreenState extends State<CompareResultsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Compare Results'),
+      ),
+    );
+
+    
   }
 }

@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fantasy_motogp/models-provider/firebase_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../pick_widgets/eighth_pick.dart';
 import '../pick_widgets/eleventh_pick.dart';
@@ -21,11 +20,10 @@ import '../pick_widgets/tenth_pick.dart';
 import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
-import '../models-provider/grid_provider.dart';
-import '../models-provider/calculate_points.dart';
+import '../models_provider/firebase_actions.dart';
 
 class GridScreen extends StatefulWidget {
-  static const routeName = '/riderSelectedScreen';
+  static const routeName = '/GridScreen';
 
   @override
   _GridScreenState createState() => _GridScreenState();
@@ -33,8 +31,7 @@ class GridScreen extends StatefulWidget {
 
 class _GridScreenState extends State<GridScreen> {
   int _selectedIndex = 0;
-  DocumentSnapshot
-      finalResults; //= FirebaseFirestore.instance.collection('results');
+  DocumentSnapshot finalResults;
   bool lockRiderPicks = false;
 
   Map finalResultsData = Map();
@@ -51,6 +48,11 @@ class _GridScreenState extends State<GridScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -108,6 +110,7 @@ class _GridScreenState extends State<GridScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.grid_view_rounded),

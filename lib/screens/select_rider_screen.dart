@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
-import '../models-provider/riderModel.dart';
-import '../models-provider/grid_provider.dart';
+import '../models_provider/riderModel.dart';
+import '../models_provider/grid_provider.dart';
 
 class SelectRiderScreen extends StatefulWidget {
   static const routeName = '/pickRiderScreen';

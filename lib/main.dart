@@ -5,14 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
-import './models-provider/riderModel.dart';
-import './screens/select_rider_screen.dart';
+import './models_provider/riderModel.dart';
+import './models_provider/authenticate.dart';
+import './models_provider/grid_provider.dart';
+import './models_provider/calculate_points.dart';
+import './models_provider/firebase_actions.dart';
+import './screens/compare_results_screen.dart';
 import './screens/grid_screen.dart';
-import './models-provider/authenticate.dart';
-import 'screens/login_screen.dart';
-import './models-provider/grid_provider.dart';
-import './models-provider/calculate_points.dart';
-import './models-provider/firebase_actions.dart';
+import './screens/login_screen.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +56,8 @@ class FantasyMotogp extends StatelessWidget {
             }),
         routes: {
           GridScreen.routeName: (BuildContext ctx) => GridScreen(),
+          CompareResultsScreen.routeName: (BuildContext ctx) =>
+              CompareResultsScreen(),
         },
       ),
     );

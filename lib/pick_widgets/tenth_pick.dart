@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models-provider/grid_provider.dart';
-import '../models-provider/firebase_actions.dart';
+import '../models_provider/grid_provider.dart';
+import '../models_provider/firebase_actions.dart';
 
 class TenthPick extends StatelessWidget {
   static const int _gridPosition = 9;
