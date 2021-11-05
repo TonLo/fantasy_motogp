@@ -13,6 +13,7 @@ import './models_provider/firebase_actions.dart';
 import './screens/compare_results_screen.dart';
 import './screens/grid_screen.dart';
 import './screens/login_screen.dart';
+import './screens/screen_routing.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,13 +53,13 @@ class FantasyMotogp extends StatelessWidget {
               if (!userSnapshot.hasData) {
                 return AuthScreen();
               }
-              return GridScreen();
+              return ScreenRouting();
             }),
-        routes: {
-          GridScreen.routeName: (BuildContext ctx) => GridScreen(),
-          CompareResultsScreen.routeName: (BuildContext ctx) =>
-              CompareResultsScreen(),
-        },
+        // routes: {
+        //   GridScreen.routeName: (BuildContext ctx) => GridScreen(),
+        //   CompareResultsScreen.routeName: (BuildContext ctx) =>
+        //       CompareResultsScreen(),
+        // },
       ),
     );
   }

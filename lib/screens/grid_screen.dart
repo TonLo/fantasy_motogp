@@ -23,14 +23,11 @@ import '../pick_widgets/twelfth_pick.dart';
 import '../models_provider/firebase_actions.dart';
 
 class GridScreen extends StatefulWidget {
-  static const routeName = '/GridScreen';
-
   @override
   _GridScreenState createState() => _GridScreenState();
 }
 
 class _GridScreenState extends State<GridScreen> {
-  int _selectedIndex = 0;
   DocumentSnapshot finalResults;
   bool lockRiderPicks = false;
 
@@ -42,12 +39,6 @@ class _GridScreenState extends State<GridScreen> {
         .retrieveFinalResults(context);
     await Provider.of<FirebaseActions>(context, listen: false)
         .savePicksToServer(context);
-  }
-
-  void _navBarTappedItem(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -109,28 +100,7 @@ class _GridScreenState extends State<GridScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_rounded),
-              label: 'Grid',
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined),
-              label: 'My Results',
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard),
-              label: 'Leaderboard',
-              backgroundColor: Colors.white),
-        ],
-        backgroundColor: Colors.black38,
-        selectedItemColor: Colors.amber[900],
-        unselectedItemColor: Colors.white,
-        currentIndex: _selectedIndex,
-        onTap: _navBarTappedItem,
-      ),
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       body: ListView(
         children: <Widget>[
