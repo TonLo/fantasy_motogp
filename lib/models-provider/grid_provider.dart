@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import '../screens/select_rider_screen.dart';
 import 'riderModel.dart';
 import 'calculate_points.dart';
 
 class GridProvider extends ChangeNotifier {
+  // Each rider poistion that will be added to the list
   Rider firstPlaceGridRider = Rider();
   Rider secondPlaceGridRider = Rider();
   Rider thirdPlaceGridRider = Rider();
@@ -21,24 +21,18 @@ class GridProvider extends ChangeNotifier {
   Rider thirteenthPlaceGridRider = Rider();
   Rider fourteenthPlaceGridRider = Rider();
   Rider fifteenthPlaceGridRider = Rider();
+
   Rider _emptyRider = Rider();
   Rider _oldRider = Rider();
+  List unorderedListOfRiders = [];
+  List<Rider> orderedListOfRiders = [];
   CalculatePoints gridPoints = CalculatePoints();
+  
+  List finalResultsList = List.generate(15, (index) => [], growable: true);
 
   // List for all selected riders
-  var finalGridPositionList =
+  var finalUserPickList =
       List<Rider>.generate(15, (index) => Rider(), growable: true);
-
-  // Go to PickRiderScreen and retrieve selected rider and
-  // add selected rider to the grid
-  void goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
-    Rider _selectedRider = await Navigator.push(
-      ctx,
-      MaterialPageRoute(builder: (context) => SelectRiderScreen()),
-    );
-    // Sends currently selected rider and grid position data
-    addRiderToGridPositionList(_selectedRider, gridPosition);
-  }
 
   // Changed the grid position variable's image to and empty rider image
   // Grid position variable is mainly created to hold the rider image and
@@ -53,7 +47,7 @@ class GridProvider extends ChangeNotifier {
   // and are now being moved to a new position
   void removeRiderFromGridPositionList() {
     // Sets the rider at this specific index to an empty rider...all null values
-    finalGridPositionList.setAll(_oldRider.gridPosition, [_emptyRider]);
+    finalUserPickList.setAll(_oldRider.gridPosition, [_emptyRider]);
   }
 
   // If a rider was previously selected and is now being moved to a different
@@ -61,16 +55,16 @@ class GridProvider extends ChangeNotifier {
   // With the previous position identified the list can be updated to remove this rider
   // from the previous position
   void identifyOldRiderPosition(Rider rider) {
-    final index = finalGridPositionList.indexWhere((e) => e.id == rider.id);
+    final index = finalUserPickList.indexWhere((e) => e.id == rider.id);
     // Updating _oldRider variable with the currently selected rider's previous
     // position values
-    _oldRider = finalGridPositionList[index];
+    _oldRider = finalUserPickList[index];
   }
 
   // Check if the currently selected rider has previously been selected in a
   // different grid spot
   bool containsRider(Rider rider) {
-    final conatinsRider = finalGridPositionList.where((e) => e.id == rider.id);
+    final conatinsRider = finalUserPickList.where((e) => e.id == rider.id);
     if (conatinsRider.isEmpty) {
       return false;
     } else {
@@ -89,7 +83,7 @@ class GridProvider extends ChangeNotifier {
     }
     rider.gridPosition = gridPosition;
     // Adding rider to the selected grid position
-    finalGridPositionList.setAll(gridPosition, [rider]);
+    finalUserPickList.setAll(gridPosition, [rider]);
     updateSelectedRiderPositions(rider, gridPosition, false);
     // Resetting _oldRider variable to prevent accidental data mixing
     _oldRider = _emptyRider;
@@ -291,20 +285,20 @@ class GridProvider extends ChangeNotifier {
   }
 
   void finalizePoints() {
-    finalGridPositionList[0].points = gridPoints.first;
-    finalGridPositionList[1].points = gridPoints.second;
-    finalGridPositionList[2].points = gridPoints.third;
-    finalGridPositionList[3].points = gridPoints.fourth;
-    finalGridPositionList[4].points = gridPoints.fifth;
-    finalGridPositionList[5].points = gridPoints.sixth;
-    finalGridPositionList[6].points = gridPoints.seventh;
-    finalGridPositionList[7].points = gridPoints.eighth;
-    finalGridPositionList[8].points = gridPoints.ninth;
-    finalGridPositionList[9].points = gridPoints.tenth;
-    finalGridPositionList[10].points = gridPoints.eleventh;
-    finalGridPositionList[11].points = gridPoints.twelfth;
-    finalGridPositionList[12].points = gridPoints.thirteenth;
-    finalGridPositionList[13].points = gridPoints.fourteenth;
-    finalGridPositionList[14].points = gridPoints.fifteenth;
+    finalUserPickList[0].points = gridPoints.first;
+    finalUserPickList[1].points = gridPoints.second;
+    finalUserPickList[2].points = gridPoints.third;
+    finalUserPickList[3].points = gridPoints.fourth;
+    finalUserPickList[4].points = gridPoints.fifth;
+    finalUserPickList[5].points = gridPoints.sixth;
+    finalUserPickList[6].points = gridPoints.seventh;
+    finalUserPickList[7].points = gridPoints.eighth;
+    finalUserPickList[8].points = gridPoints.ninth;
+    finalUserPickList[9].points = gridPoints.tenth;
+    finalUserPickList[10].points = gridPoints.eleventh;
+    finalUserPickList[11].points = gridPoints.twelfth;
+    finalUserPickList[12].points = gridPoints.thirteenth;
+    finalUserPickList[13].points = gridPoints.fourteenth;
+    finalUserPickList[14].points = gridPoints.fifteenth;
   }
 }

@@ -1,0 +1,14 @@
+{
+
+    "editor.tokenColorCustomizations": {
+
+        "comments": "#a963ea"
+        
+    },
+
+    "editor.bracketPairColorization.enabled": true,
+
+    "editor.guides.bracketPairs":true,
+
+    "editor.guides.bracketPairsHorizontal": true,
+}

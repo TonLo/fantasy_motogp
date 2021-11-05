@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models-provider/grid_provider.dart';
+import '../models-provider/firebase_actions.dart';
 
 class SecondPick extends StatelessWidget {
   static const int _gridPosition = 1;
@@ -10,24 +11,33 @@ class SecondPick extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GridProvider _gridProvider = Provider.of<GridProvider>(context, listen: false);
+    GridProvider _gridProvider =
+        Provider.of<GridProvider>(context, listen: false);
+    FirebaseActions _firebaseActions =
+        Provider.of<FirebaseActions>(context, listen: false);
     return Container(
       child: GestureDetector(
         child: Card(
           elevation: 10,
           child: Consumer<GridProvider>(
-            builder: (context, model, child) {
+            builder: (context, _consumerGridProvider, child) {
               return Container(
-                  width: 100,
-                  height: 100,
-                  child: model.secondPlaceGridRider.image == null
-                      ? Image.asset(_emptyImage)
-                      : Image.asset(model.secondPlaceGridRider.image));
+                width: 100,
+                height: 100,
+                child: _consumerGridProvider.secondPlaceGridRider.image == null
+                    ? Image.asset(_emptyImage)
+                    : Image.asset(
+                        _consumerGridProvider.secondPlaceGridRider.image,
+                      ),
+              );
             },
           ),
         ),
         onTap: () {
-          _gridProvider.goToPickRiderScreen(context, _gridPosition);
+          _firebaseActions.goToPickRiderScreen(context, _gridPosition);
+        },
+        onLongPress: () {
+          _gridProvider.removeSelectedRiderWithoutReplacement(_gridPosition);
         },
       ),
     );

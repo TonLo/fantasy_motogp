@@ -9,9 +9,10 @@ import './models-provider/riderModel.dart';
 import './screens/select_rider_screen.dart';
 import './screens/grid_screen.dart';
 import './models-provider/authenticate.dart';
-import './widgets/login_screen.dart';
-import 'models-provider/grid_provider.dart';
+import 'screens/login_screen.dart';
+import './models-provider/grid_provider.dart';
 import './models-provider/calculate_points.dart';
+import './models-provider/firebase_actions.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,9 @@ class FantasyMotogp extends StatelessWidget {
         ChangeNotifierProvider<CalculatePoints>(
           create: (ctx) => CalculatePoints(),
         ),
+        ChangeNotifierProvider<FirebaseActions>(
+          create: (ctx) => FirebaseActions(),
+        ),
       ],
       child: MaterialApp(
         title: 'FantasyGP',
@@ -51,9 +55,7 @@ class FantasyMotogp extends StatelessWidget {
               return GridScreen();
             }),
         routes: {
-          SelectRiderScreen.routeName: (BuildContext ctx) => SelectRiderScreen(),
-          GridScreen.routeName: (BuildContext ctx) =>
-              GridScreen(),
+          GridScreen.routeName: (BuildContext ctx) => GridScreen(),
         },
       ),
     );

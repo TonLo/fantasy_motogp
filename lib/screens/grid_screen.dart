@@ -37,30 +37,15 @@ class _GridScreenState extends State<GridScreen> {
   DocumentSnapshot
       finalResults; //= FirebaseFirestore.instance.collection('results');
   bool lockRiderPicks = false;
-  GridProvider gridProvider = GridProvider();
-  CalculatePoints gridPoints = CalculatePoints();
-  Authenticate auth = Authenticate();
+
   Map finalResultsData = Map();
   List finalResultsList = List.generate(15, (index) => [], growable: true);
-  var _currentUserUid;
 
-  void _submitPicks() {
-    gridProvider.finalizePoints();
-    retrieveFinalResults();
-    Provider.of<FirebaseActions>(context, listen: false).savePicksToServer(context);
-  }
-
-  
-
-  void retrieveFinalResults() async {
-    finalResults = await FirebaseFirestore.instance
-        .collection('2021Results')
-        .doc('round1')
-        .get();
-
-    finalResultsData = finalResults.data();
-    finalResultsData.entries.forEach((element) =>
-        finalResultsList.setAll(int.parse(element.key), [element.value]));
+  Future<void> _submitPicks() async {
+    await Provider.of<FirebaseActions>(context, listen: false)
+        .retrieveFinalResults(context);
+    await Provider.of<FirebaseActions>(context, listen: false)
+        .savePicksToServer(context);
   }
 
   void _navBarTappedItem(int index) {
@@ -71,8 +56,6 @@ class _GridScreenState extends State<GridScreen> {
 
   @override
   Widget build(BuildContext context) {
-    GridProvider gridModelProvider =
-        Provider.of<GridProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Picked Riders'),

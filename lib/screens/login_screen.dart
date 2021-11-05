@@ -92,14 +92,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {
-    'email': '',
-    'password': '',
-    'username': '',
-  };
 
   bool _isLoading = false;
   final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -128,24 +125,29 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Authenticate>(context, listen: false).login(
-        _authData['email'],
-        _authData['password'],
-        _authData['username'],
-      );
-    } else {
-      // Sign user up
-      await Provider.of<Authenticate>(context, listen: false).signUp(
-        _authData['email'],
-        _authData['password'],
-        _authData['username'],
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Authenticate>(context, listen: false).login(
+          _emailController.text,
+          _passwordController.text,
+        );
+      } else {
+        // Sign user up
+        await Provider.of<Authenticate>(context, listen: false).signUp(
+          _emailController.text,
+          _passwordController.text,
+          _usernameController.text,
+        );
+      }
+      // setState(
+      //   () {
+      //     _isLoading = false;
+      //   },
+      // );
+    } catch (e) {
+      print(e.toString());
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   void _switchAuthMode() {
@@ -158,6 +160,15 @@ class _LoginScreenState extends State<LoginScreen> {
         _authMode = AuthMode.Login;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    _isLoading = false;
+    super.dispose();
   }
 
   @override
@@ -185,28 +196,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: 'Enter Email:',
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  controller: _emailController,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
                       return 'Invalid Email Address.';
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                    _authData['email'] = value;
-                  },
                 ),
                 ////////////////// USERNAME TEXT FORM FIELD /////////////////
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
+                    enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(
                       labelText: 'Username',
                     ),
+                    controller: _usernameController,
                     // Check the database if the username is already taken
                     validator: (value) {
                       return null;
-                    },
-                    onSaved: (value) {
-                      _authData['username'] = value;
                     },
                   ),
                 //////////////// PASSWORD TEXT FORM FIELD ///////////////////
@@ -221,9 +229,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       return 'Enter Vaild Password';
                     }
                     return null;
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value;
                   },
                 ),
                 //////////////////// CONFIRM PASSWORD FOR USERS SIGNING UP /////////////

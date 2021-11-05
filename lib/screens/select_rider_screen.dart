@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import '../models-provider/riderModel.dart';
+import '../models-provider/grid_provider.dart';
 
 class SelectRiderScreen extends StatefulWidget {
   static const routeName = '/pickRiderScreen';
@@ -13,6 +15,7 @@ class SelectRiderScreen extends StatefulWidget {
 class _SelectRiderScreenState extends State<SelectRiderScreen> {
   final teamList = FirebaseFirestore.instance.collection('riders');
   Rider selectedRider = new Rider();
+  Rider rider = new Rider();
 
   void passSelectedRider(Rider rider) {
     Navigator.pop(context, rider);
@@ -20,47 +23,32 @@ class _SelectRiderScreenState extends State<SelectRiderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _gridProvider = Provider.of<GridProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Rider'),
       ),
-      body: FutureBuilder<QuerySnapshot>(
-        future: teamList.get(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-          }
-          // Reading all riders from firebase to select from
-          final List riderList =
-              snapshot.data.docs.map((e) => e.data()).toList();
-
-          // Creating a list of riders to select
-          return ListView.builder(
-            itemCount: riderList.length,
-            itemBuilder: (ctx, i) {
-              return Card(
-                child: ListTile(
-                  leading: Image.asset('${riderList[i]['image']}'),
-                  title: Text(
-                    '${riderList[i]['name']}',
-                  ),
-                  onTap: () {
-                    selectedRider = Rider(
-                        image: riderList[i]['image'],
-                        id: riderList[i]['id'],
-                        name: riderList[i]['name'],
-                        team: riderList[i]['team']);
-                    // Sending rider data back to selected grid position
-                    passSelectedRider(selectedRider);
-                  },
-                ),
-              );
-            },
+      body: ListView.builder(
+        itemCount: _gridProvider.unorderedListOfRiders.length,
+        itemBuilder: (ctx, i) {
+          return Card(
+            child: ListTile(
+              leading: Image.asset(
+                  '${_gridProvider.unorderedListOfRiders[i]['image']}'),
+              title: Text(
+                '${_gridProvider.unorderedListOfRiders[i]['name']}',
+              ),
+              onTap: () {
+                selectedRider = Rider(
+                  image: _gridProvider.unorderedListOfRiders[i]['image'],
+                  id: _gridProvider.unorderedListOfRiders[i]['id'],
+                  name: _gridProvider.unorderedListOfRiders[i]['name'],
+                  team: _gridProvider.unorderedListOfRiders[i]['team'],
+                );
+                // Sending rider data back to selected grid position
+                passSelectedRider(selectedRider);
+              },
+            ),
           );
         },
       ),
