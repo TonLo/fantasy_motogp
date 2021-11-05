@@ -140,11 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
           _usernameController.text,
         );
       }
-      // setState(
-      //   () {
-      //     _isLoading = false;
-      //   },
-      // );
     } catch (e) {
       print(e.toString());
     }
