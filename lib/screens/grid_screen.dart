@@ -23,7 +23,6 @@ import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
 import '../models-provider/grid_provider.dart';
 import '../models-provider/calculate_points.dart';
-import '../models-provider/authenticate.dart';
 
 class GridScreen extends StatefulWidget {
   static const routeName = '/riderSelectedScreen';
