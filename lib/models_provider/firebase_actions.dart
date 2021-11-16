@@ -7,11 +7,13 @@ import 'package:provider/provider.dart';
 import './grid_provider.dart';
 import './authenticate.dart';
 import './riderModel.dart';
+import './rider_data.dart';
 import '../screens/select_rider_screen.dart';
 
 class FirebaseActions with ChangeNotifier {
   final _firebaseActions = FirebaseFirestore.instance;
   Authenticate _auth = Authenticate();
+  //var rider = Rider();
   Map retrievedResultsData = Map();
   Map finalUserPicksData = Map();
 
@@ -45,7 +47,6 @@ class FirebaseActions with ChangeNotifier {
       );
       orderedList.add(rider);
     }
-
     return orderedList;
   }
 
@@ -56,10 +57,10 @@ class FirebaseActions with ChangeNotifier {
 
   Future<void> retrieveFinalResults(BuildContext ctx) async {
     var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
-
+    //List _tempResultsList = List.generate(15, (index) => [], growable: true);
     var retrieveResults = await FirebaseFirestore.instance
         .collection('2021Results')
-        .doc('round2')
+        .doc('round1')
         .get();
 
     retrievedResultsData = retrieveResults.get('raceResults');
@@ -71,24 +72,22 @@ class FirebaseActions with ChangeNotifier {
     );
   }
 
-  void retrieveFinalUserPicks(BuildContext ctx) async {
+  Future retrieveFinalUserPicks(BuildContext ctx) async {
     var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
+    var _rider = Provider.of<RiderData>(ctx, listen: false);
 
     var retrieveUserPicks = await FirebaseFirestore.instance
         .collection('users')
+        .doc(_auth.getUser())
+        .collection('picks')
         .doc('round1')
         .get();
 
-    var riderList =
-        await FirebaseFirestore.instance.collection('riders').doc().get();
-
     finalUserPicksData = retrieveUserPicks.data();
-    finalUserPicksData.entries.forEach(
-      (element) => _gridProvider.finalUserPickList.setAll(
-        int.parse(element.key),
-        [element.value],
-      ),
-    );
+    finalUserPicksData.entries.forEach((element) {
+      _gridProvider.retrievedUserPickList[int.parse(element.key)] =
+          _rider.riderData['${element.value}'];
+    });
   }
 
   Future<void> savePicksToServer(BuildContext ctx) async {

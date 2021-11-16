@@ -23,6 +23,7 @@ class _ScreenRoutingState extends State<ScreenRouting> {
       case 1:
         _navigatorKey.currentState
             .pushReplacementNamed('/CompareResultsScreen');
+
         break;
     }
   }

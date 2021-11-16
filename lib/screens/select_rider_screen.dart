@@ -13,9 +13,7 @@ class SelectRiderScreen extends StatefulWidget {
 }
 
 class _SelectRiderScreenState extends State<SelectRiderScreen> {
-  final teamList = FirebaseFirestore.instance.collection('riders');
   Rider selectedRider = new Rider();
-  Rider rider = new Rider();
 
   void passSelectedRider(Rider rider) {
     Navigator.pop(context, rider);

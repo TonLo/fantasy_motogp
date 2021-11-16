@@ -1,3 +1,4 @@
+import 'package:fantasy_motogp/models_provider/compare_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ import './models_provider/grid_provider.dart';
 import './models_provider/calculate_points.dart';
 import './models_provider/firebase_actions.dart';
 import './screens/compare_results_screen.dart';
+import './models_provider/rider_data.dart';
 import './screens/grid_screen.dart';
 import './screens/login_screen.dart';
 import './screens/screen_routing.dart';
@@ -40,6 +42,12 @@ class FantasyMotogp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FirebaseActions>(
           create: (ctx) => FirebaseActions(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CompareProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => RiderData(),
         ),
       ],
       child: MaterialApp(

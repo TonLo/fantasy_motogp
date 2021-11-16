@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +22,8 @@ import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
 import '../models_provider/firebase_actions.dart';
+import '../models_provider/grid_provider.dart';
+import '../models_provider/calculate_points.dart';
 
 class GridScreen extends StatefulWidget {
   @override
@@ -35,16 +38,30 @@ class _GridScreenState extends State<GridScreen> {
   List finalResultsList = List.generate(15, (index) => [], growable: true);
 
   Future<void> _submitPicks() async {
-    await Provider.of<FirebaseActions>(context, listen: false)
-        .retrieveFinalResults(context);
-    await Provider.of<FirebaseActions>(context, listen: false)
-        .savePicksToServer(context);
+    var _gridProvider = Provider.of<GridProvider>(context, listen: false);
+    var _calcPoints = Provider.of<CalculatePoints>(context, listen: false);
+    _gridProvider.fullGrid();
+    try {
+      await Provider.of<FirebaseActions>(context, listen: false)
+          .savePicksToServer(context);
+      await Provider.of<FirebaseActions>(context, listen: false)
+          .retrieveFinalResults(context);
+    } on PlatformException catch (error) {
+      var errorMessage = 'Could not contact server';
+      if (error.message != null) {
+        errorMessage = error.message;
+      }
+      print(errorMessage);
+    }
+
+    _calcPoints.compareResults(context,
+        _gridProvider.finalUserPickList, _gridProvider.finalResultsList);
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +73,7 @@ class _GridScreenState extends State<GridScreen> {
               icon: Icon(Icons.save),
               onPressed: () {
                 showDialog(
+                    useRootNavigator: false,
                     context: context,
                     builder: (_) => AlertDialog(
                           title: Text('Save Picks'),

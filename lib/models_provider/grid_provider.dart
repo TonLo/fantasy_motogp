@@ -5,30 +5,50 @@ import 'riderModel.dart';
 import 'calculate_points.dart';
 
 class GridProvider extends ChangeNotifier {
+  static const String _emptyRiderImage = 'assets/images/genericPerson.png';
+
   // Each rider poistion that will be added to the list
   Rider firstPlaceGridRider = Rider();
+  bool _firstPlaceEmpty = true;
   Rider secondPlaceGridRider = Rider();
+  bool _secondPlaceEmpty = true;
   Rider thirdPlaceGridRider = Rider();
+  bool _thirdPlaceEmpty = true;
   Rider fourthPlaceGridRider = Rider();
+  bool _fourthPlaceEmpty = true;
   Rider fifthPlaceGridRider = Rider();
+  bool _fifthPlaceEmpty = true;
   Rider sixthPlaceGridRider = Rider();
+  bool _sixthPlaceEmpty = true;
   Rider seventhPlaceGridRider = Rider();
+  bool _seventhPlaceEmpty = true;
   Rider eighthPlaceGridRider = Rider();
+  bool _eighthPlaceEmpty = true;
   Rider ninthPlaceGridRider = Rider();
+  bool _ninthPlaceEmpty = true;
   Rider tenthPlaceGridRider = Rider();
+  bool _tenthPlaceEmpty = true;
   Rider eleventhPlaceGridRider = Rider();
+  bool _eleventhPlaceEmpty = true;
   Rider twelfthPlaceGridRider = Rider();
+  bool _twelfthPlaceEmpty = true;
   Rider thirteenthPlaceGridRider = Rider();
+  bool _thirteenthPlaceEmpty = true;
   Rider fourteenthPlaceGridRider = Rider();
+  bool _fourteenthPlaceEmpty = true;
   Rider fifteenthPlaceGridRider = Rider();
-
+  bool _fifteenthPlaceEmpty = true;
   Rider _emptyRider = Rider();
   Rider _oldRider = Rider();
+
+  CalculatePoints gridPoints = CalculatePoints();
+
   List unorderedListOfRiders = [];
   List<Rider> orderedListOfRiders = [];
-  CalculatePoints gridPoints = CalculatePoints();
-  
+
   List finalResultsList = List.generate(15, (index) => [], growable: true);
+  List<Rider> retrievedUserPickList =
+      List<Rider>.generate(15, (index) => Rider(), growable: true);
 
   // List for all selected riders
   var finalUserPickList =
@@ -93,6 +113,31 @@ class GridProvider extends ChangeNotifier {
     updateSelectedRiderPositions(null, gridPosition, true);
   }
 
+  _swapRider(Rider currentRider, Rider replacementRider, int gridPosition) {
+    currentRider = replacementRider;
+    currentRider.gridPosition = gridPosition;
+    return currentRider;
+  }
+
+  _removeRider(Rider rider) {
+    rider.image = _emptyRiderImage;
+    rider.gridPosition = null;
+    rider.name = null;
+    rider.points = null;
+    rider.team = null;
+    return rider;
+  }
+
+  
+
+  // Make sure all grid positions have a rider selected before submitting picks
+  bool fullGrid() {
+    if (true) {
+      return true;
+    }
+    return false;
+  }
+
   // Switch to identify which position is being updated with which rider data
   void updateSelectedRiderPositions(
       Rider rider, int gridPosition, bool onGrid) {
@@ -102,186 +147,209 @@ class GridProvider extends ChangeNotifier {
           // If rider was previously selected at another grid position onGrid will
           // be true and will change the rider image to an empty rider.
           if (onGrid) {
-            firstPlaceGridRider.image = 'assets/images/genericPerson.png';
+            firstPlaceGridRider = _removeRider(firstPlaceGridRider);
+            _firstPlaceEmpty = true;
             notifyListeners();
             return;
           }
           // Update rider image and their grid position, updating position variables
           // grid position may not be necessary
-          firstPlaceGridRider = rider;
-          firstPlaceGridRider.gridPosition = gridPosition;
+          firstPlaceGridRider =
+              _swapRider(firstPlaceGridRider, rider, gridPosition);
+          _firstPlaceEmpty = false;
           notifyListeners();
           return;
         }
       case 1:
         {
           if (onGrid) {
-            secondPlaceGridRider.image = 'assets/images/genericPerson.png';
+            secondPlaceGridRider = _removeRider(secondPlaceGridRider);
+            _secondPlaceEmpty = true;
             notifyListeners();
             return;
           }
-          secondPlaceGridRider = rider;
-          secondPlaceGridRider.gridPosition = gridPosition;
+
+          secondPlaceGridRider =
+              _swapRider(secondPlaceGridRider, rider, gridPosition);
+          _secondPlaceEmpty = false;
           notifyListeners();
           return;
         }
       case 2:
         {
           if (onGrid) {
-            thirdPlaceGridRider.image = 'assets/images/genericPerson.png';
+            thirdPlaceGridRider = _removeRider(thirdPlaceGridRider);
             notifyListeners();
             return;
           }
-          thirdPlaceGridRider = rider;
-          thirdPlaceGridRider.gridPosition = gridPosition;
+          thirdPlaceGridRider =
+              _swapRider(thirdPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 3:
         {
           if (onGrid) {
-            fourthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            fourthPlaceGridRider = _removeRider(fourthPlaceGridRider);
             notifyListeners();
             return;
           }
-          fourthPlaceGridRider = rider;
-          fourthPlaceGridRider.gridPosition = gridPosition;
+          fourthPlaceGridRider =
+              _swapRider(fourthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 4:
         {
           if (onGrid) {
-            fifthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            fifthPlaceGridRider = _removeRider(fifthPlaceGridRider);
             notifyListeners();
             return;
           }
-          fifthPlaceGridRider = rider;
-          fifthPlaceGridRider.gridPosition = gridPosition;
+          fifthPlaceGridRider =
+              _swapRider(fifthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 5:
         {
           if (onGrid) {
-            sixthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            sixthPlaceGridRider = _removeRider(sixthPlaceGridRider);
             notifyListeners();
             return;
           }
-          sixthPlaceGridRider = rider;
-          sixthPlaceGridRider.gridPosition = gridPosition;
+          sixthPlaceGridRider =
+              _swapRider(sixthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 6:
         {
           if (onGrid) {
-            seventhPlaceGridRider.image = 'assets/images/genericPerson.png';
+            seventhPlaceGridRider = _removeRider(seventhPlaceGridRider);
             notifyListeners();
             return;
           }
-          seventhPlaceGridRider = rider;
-          seventhPlaceGridRider.gridPosition = gridPosition;
+          seventhPlaceGridRider =
+              _swapRider(seventhPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 7:
         {
           if (onGrid) {
-            eighthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            eighthPlaceGridRider = _removeRider(eighthPlaceGridRider);
             notifyListeners();
             return;
           }
-          eighthPlaceGridRider = rider;
-          eighthPlaceGridRider.gridPosition = gridPosition;
+          eighthPlaceGridRider =
+              _swapRider(eighthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 8:
         {
           if (onGrid) {
-            ninthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            ninthPlaceGridRider = _removeRider(ninthPlaceGridRider);
             notifyListeners();
             return;
           }
-          ninthPlaceGridRider = rider;
-          ninthPlaceGridRider.gridPosition = gridPosition;
+          ninthPlaceGridRider =
+              _swapRider(ninthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 9:
         {
           if (onGrid) {
-            tenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            tenthPlaceGridRider = _removeRider(tenthPlaceGridRider);
             notifyListeners();
             return;
           }
-          tenthPlaceGridRider = rider;
-          tenthPlaceGridRider.gridPosition = gridPosition;
+          tenthPlaceGridRider =
+              _swapRider(tenthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 10:
         {
           if (onGrid) {
-            eleventhPlaceGridRider.image = 'assets/images/genericPerson.png';
+            eleventhPlaceGridRider = _removeRider(eleventhPlaceGridRider);
             notifyListeners();
             return;
           }
-          eleventhPlaceGridRider = rider;
-          eleventhPlaceGridRider.gridPosition = gridPosition;
+          eleventhPlaceGridRider =
+              _swapRider(eleventhPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 11:
         {
           if (onGrid) {
-            twelfthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            twelfthPlaceGridRider = _removeRider(twelfthPlaceGridRider);
             notifyListeners();
             return;
           }
-          twelfthPlaceGridRider = rider;
-          twelfthPlaceGridRider.gridPosition = gridPosition;
+          twelfthPlaceGridRider =
+              _swapRider(twelfthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 12:
         {
           if (onGrid) {
-            thirteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            thirteenthPlaceGridRider = _removeRider(thirteenthPlaceGridRider);
             notifyListeners();
             return;
           }
-          thirteenthPlaceGridRider = rider;
-          thirteenthPlaceGridRider.gridPosition = gridPosition;
+          thirteenthPlaceGridRider =
+              _swapRider(thirteenthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 13:
         {
           if (onGrid) {
-            fourteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            fourteenthPlaceGridRider = _removeRider(fourteenthPlaceGridRider);
             notifyListeners();
             return;
           }
-          fourteenthPlaceGridRider = rider;
-          fourteenthPlaceGridRider.gridPosition = gridPosition;
+          fourteenthPlaceGridRider =
+              _swapRider(fourteenthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
       case 14:
         {
           if (onGrid) {
-            fifteenthPlaceGridRider.image = 'assets/images/genericPerson.png';
+            fifteenthPlaceGridRider = _removeRider(fifteenthPlaceGridRider);
             notifyListeners();
             return;
           }
-          fifteenthPlaceGridRider = rider;
-          fifteenthPlaceGridRider.gridPosition = gridPosition;
+          fifteenthPlaceGridRider =
+              _swapRider(fifteenthPlaceGridRider, rider, gridPosition);
           notifyListeners();
           return;
         }
     }
+  }
+
+  void addGridPositionsToFinalUserPickList(){
+    finalUserPickList[0] = firstPlaceGridRider;
+    finalUserPickList[1] = secondPlaceGridRider;
+    finalUserPickList[2] = thirdPlaceGridRider;
+    finalUserPickList[3] = fourthPlaceGridRider;
+    finalUserPickList[4] = fifthPlaceGridRider;
+    finalUserPickList[5] = sixthPlaceGridRider;
+    finalUserPickList[6] = seventhPlaceGridRider;
+    finalUserPickList[7] = eighthPlaceGridRider;
+    finalUserPickList[8] = ninthPlaceGridRider;
+    finalUserPickList[9] = tenthPlaceGridRider;
+    finalUserPickList[10] = eleventhPlaceGridRider;
+    finalUserPickList[11] = twelfthPlaceGridRider;
+    finalUserPickList[12] = thirdPlaceGridRider;
+    finalUserPickList[13] = fourteenthPlaceGridRider;
+    finalUserPickList[14] = fifteenthPlaceGridRider;
   }
 
   void finalizePoints() {
