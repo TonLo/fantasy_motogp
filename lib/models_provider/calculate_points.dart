@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import './riderModel.dart';
 
@@ -34,8 +33,7 @@ class CalculatePoints extends ChangeNotifier {
 
   double pointsTotal = 0;
 
-  compareResults(
-      BuildContext context, List<Rider> userPicks, List finalResults) {
+  double compareResults(List<Rider> userPicks, List finalResults) {
     // Podium comparisons
     if (userPicks[0].id == finalResults[0]) {
       pointsTotal += first;
@@ -142,5 +140,7 @@ class CalculatePoints extends ChangeNotifier {
         userPicks[14].id == finalResults[13]) {
       pointsTotal += lastRowRange; // In Range
     }
+
+    return pointsTotal;
   }
 }

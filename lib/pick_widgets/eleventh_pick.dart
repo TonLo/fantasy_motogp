@@ -6,7 +6,6 @@ import '../models_provider/firebase_actions.dart';
 
 class EleventhPick extends StatelessWidget {
   static const int _gridPosition = 10;
-  static const double _points = 7.5;
   final String _emptyImage = 'assets/images/genericPerson.png';
 
   @override

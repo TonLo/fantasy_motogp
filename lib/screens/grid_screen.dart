@@ -54,14 +54,9 @@ class _GridScreenState extends State<GridScreen> {
       print(errorMessage);
     }
 
-    _calcPoints.compareResults(context,
+    _gridProvider.pointsTotal = _calcPoints.compareResults(
         _gridProvider.finalUserPickList, _gridProvider.finalResultsList);
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'riderModel.dart';
-import 'calculate_points.dart';
 
 class GridProvider extends ChangeNotifier {
   static const String _emptyRiderImage = 'assets/images/genericPerson.png';
+  double pointsTotal = 0;
 
   // Each rider poistion that will be added to the list
   Rider firstPlaceGridRider = Rider();
@@ -40,8 +40,6 @@ class GridProvider extends ChangeNotifier {
   bool _fifteenthPlaceEmpty = true;
   Rider _emptyRider = Rider();
   Rider _oldRider = Rider();
-
-  CalculatePoints gridPoints = CalculatePoints();
 
   List unorderedListOfRiders = [];
   List<Rider> orderedListOfRiders = [];
@@ -127,8 +125,6 @@ class GridProvider extends ChangeNotifier {
     rider.team = null;
     return rider;
   }
-
-  
 
   // Make sure all grid positions have a rider selected before submitting picks
   bool fullGrid() {
@@ -334,7 +330,7 @@ class GridProvider extends ChangeNotifier {
     }
   }
 
-  void addGridPositionsToFinalUserPickList(){
+  void addGridPositionsToFinalUserPickList() {
     finalUserPickList[0] = firstPlaceGridRider;
     finalUserPickList[1] = secondPlaceGridRider;
     finalUserPickList[2] = thirdPlaceGridRider;
@@ -350,23 +346,5 @@ class GridProvider extends ChangeNotifier {
     finalUserPickList[12] = thirdPlaceGridRider;
     finalUserPickList[13] = fourteenthPlaceGridRider;
     finalUserPickList[14] = fifteenthPlaceGridRider;
-  }
-
-  void finalizePoints() {
-    finalUserPickList[0].points = gridPoints.first;
-    finalUserPickList[1].points = gridPoints.second;
-    finalUserPickList[2].points = gridPoints.third;
-    finalUserPickList[3].points = gridPoints.fourth;
-    finalUserPickList[4].points = gridPoints.fifth;
-    finalUserPickList[5].points = gridPoints.sixth;
-    finalUserPickList[6].points = gridPoints.seventh;
-    finalUserPickList[7].points = gridPoints.eighth;
-    finalUserPickList[8].points = gridPoints.ninth;
-    finalUserPickList[9].points = gridPoints.tenth;
-    finalUserPickList[10].points = gridPoints.eleventh;
-    finalUserPickList[11].points = gridPoints.twelfth;
-    finalUserPickList[12].points = gridPoints.thirteenth;
-    finalUserPickList[13].points = gridPoints.fourteenth;
-    finalUserPickList[14].points = gridPoints.fifteenth;
   }
 }

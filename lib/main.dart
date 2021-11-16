@@ -11,9 +11,7 @@ import './models_provider/authenticate.dart';
 import './models_provider/grid_provider.dart';
 import './models_provider/calculate_points.dart';
 import './models_provider/firebase_actions.dart';
-import './screens/compare_results_screen.dart';
 import './models_provider/rider_data.dart';
-import './screens/grid_screen.dart';
 import './screens/login_screen.dart';
 import './screens/screen_routing.dart';
 
