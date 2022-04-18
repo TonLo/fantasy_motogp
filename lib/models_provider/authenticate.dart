@@ -12,7 +12,7 @@ class Authenticate with ChangeNotifier {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } on PlatformException catch (error) {
-      var errorMessage = 'Could not authenticate. Pleae try again later.';
+      String errorMessage = 'Could not authenticate. Pleae try again later.';
 
       if (error.message != null) {
         errorMessage = error.message;
@@ -27,12 +27,12 @@ class Authenticate with ChangeNotifier {
     try {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await db.collection('users').doc(auth.currentUser.uid).set({
+      await db.collection('users').doc(auth.currentUser?.uid).set({
         'email': email,
         'username': username,
       });
     } on PlatformException catch (error) {
-      var errorMessage = 'Could not authenticate. Pleae try again later.';
+      String errorMessage = 'Could not authenticate. Pleae try again later.';
 
       if (error.message != null) {
         errorMessage = error.message;
@@ -44,6 +44,6 @@ class Authenticate with ChangeNotifier {
   }
 
   String getUser() {
-    return auth.currentUser.uid;
+    return auth.currentUser?.uid;
   }
 }

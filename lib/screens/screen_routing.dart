@@ -23,8 +23,10 @@ class _ScreenRoutingState extends State<ScreenRouting> {
       case 1:
         _navigatorKey.currentState
             .pushReplacementNamed('/CompareResultsScreen');
-
         break;
+      // case 2:
+      //   _navigatorKey.currentState.pushReplacementNamed('/MyResultsScreen');
+      //   break;
     }
   }
 
@@ -51,6 +53,9 @@ class _ScreenRoutingState extends State<ScreenRouting> {
               case '/CompareResultsScreen':
                 builder = (BuildContext context) => CompareResultsScreen();
                 break;
+              // case '/MyResultsScreen':
+              //   builder = (BuildContext context) => MyResultsScreen();
+              //   break;
               default:
                 throw Exception('Invalid route: ${routeSettings.name}');
             }
@@ -69,13 +74,14 @@ class _ScreenRoutingState extends State<ScreenRouting> {
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_circle_outlined),
-              label: 'My Results',
+              label: 'Compare Results',
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.leaderboard),
-              label: 'Leaderboard',
+              label: 'Week By Week',
               backgroundColor: Colors.white),
         ],
+        //type: BottomNavigationBarType.shifting,
         backgroundColor: Colors.black38,
         selectedItemColor: Colors.amber[900],
         unselectedItemColor: Colors.white,

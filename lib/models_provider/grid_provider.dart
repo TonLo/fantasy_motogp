@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import 'riderModel.dart';
+import 'rider_model.dart';
 
 class GridProvider extends ChangeNotifier {
   static const String _emptyRiderImage = 'assets/images/genericPerson.png';
@@ -99,7 +99,7 @@ class GridProvider extends ChangeNotifier {
       removeRiderFromGridPositionList();
       removeGridSpotImage();
     }
-    rider.gridPosition = gridPosition;
+    rider?.gridPosition = gridPosition;
     // Adding rider to the selected grid position
     finalUserPickList.setAll(gridPosition, [rider]);
     updateSelectedRiderPositions(rider, gridPosition, false);
@@ -119,10 +119,10 @@ class GridProvider extends ChangeNotifier {
 
   _removeRider(Rider rider) {
     rider.image = _emptyRiderImage;
-    rider.gridPosition = null;
-    rider.name = null;
-    rider.points = null;
-    rider.team = null;
+    rider.gridPosition = -1;
+    rider.name = '';
+    rider.points = -1;
+    rider.team = '';
     return rider;
   }
 

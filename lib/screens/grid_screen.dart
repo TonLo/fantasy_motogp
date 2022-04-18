@@ -23,7 +23,6 @@ import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
 import '../models_provider/firebase_actions.dart';
 import '../models_provider/grid_provider.dart';
-import '../models_provider/calculate_points.dart';
 
 class GridScreen extends StatefulWidget {
   @override
@@ -33,19 +32,19 @@ class GridScreen extends StatefulWidget {
 class _GridScreenState extends State<GridScreen> {
   DocumentSnapshot finalResults;
   bool lockRiderPicks = false;
+  String _currentRound = 'round1';
 
   Map finalResultsData = Map();
   List finalResultsList = List.generate(15, (index) => [], growable: true);
 
   Future<void> _submitPicks() async {
     var _gridProvider = Provider.of<GridProvider>(context, listen: false);
-    var _calcPoints = Provider.of<CalculatePoints>(context, listen: false);
     _gridProvider.fullGrid();
     try {
       await Provider.of<FirebaseActions>(context, listen: false)
           .savePicksToServer(context);
       await Provider.of<FirebaseActions>(context, listen: false)
-          .retrieveFinalResults(context);
+          .getFinalResults(context, _currentRound);
     } on PlatformException catch (error) {
       var errorMessage = 'Could not contact server';
       if (error.message != null) {
@@ -53,9 +52,6 @@ class _GridScreenState extends State<GridScreen> {
       }
       print(errorMessage);
     }
-
-    _gridProvider.pointsTotal = _calcPoints.compareResults(
-        _gridProvider.finalUserPickList, _gridProvider.finalResultsList);
   }
 
   @override

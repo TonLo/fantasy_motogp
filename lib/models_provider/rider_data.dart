@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import './riderModel.dart';
+import 'rider_model.dart';
 
 class RiderData with ChangeNotifier {
   final Map riderData = {
@@ -27,6 +27,12 @@ class RiderData with ChangeNotifier {
       team: 'Aprilia Racing Team Gresini',
       image: 'assets/images/espargaroA.jpg',
     ),
+    'savadori': Rider(
+      id: 'savadori',
+      name: 'Lorenzo Savadori',
+      team: 'Aprilia Racing Team Gresini',
+      image: 'assets/images/espargaroA.jpg',
+    ),
     'espargaroP': Rider(
       id: 'espargaroP',
       name: 'Pol Espargaro',
@@ -34,10 +40,17 @@ class RiderData with ChangeNotifier {
       image: 'assets/images/espargaroP.jpg',
     ),
     'rossi': Rider(
-        id: 'rossi',
-        name: 'Valentino Rossi',
-        team: 'Petronas Yamaha SRT',
-        image: 'assets/images/rossi.jpg'),
+      id: 'rossi',
+      name: 'Valentino Rossi',
+      team: 'Petronas Yamaha SRT',
+      image: 'assets/images/rossi.jpg',
+    ),
+    'dovizioso': Rider(
+      id: 'dovizioso',
+      name: 'Andrea Dovizioso',
+      team: 'Petronas Yamaha SRT',
+      image: 'assets/images/rossi.jpg',
+    ),
     'marini': Rider(
       id: 'marini',
       name: 'Luca Marini',
@@ -49,6 +62,12 @@ class RiderData with ChangeNotifier {
       name: 'Marc Marquez',
       team: 'Repsol Honda Team',
       image: 'assets/images/marquezM.jpg',
+    ),
+    'marquezA': Rider(
+      id: 'marquezA',
+      name: 'Alex Marquez',
+      team: 'LCR Honda CASTROL',
+      image: 'assets/images/marquezA.jpg',
     ),
     'martin': Rider(
       id: 'martin',
@@ -77,7 +96,7 @@ class RiderData with ChangeNotifier {
     'nakagami': Rider(
       id: 'nakagami',
       name: 'Takaaki Nakagami',
-      team: 'LCR Honda',
+      team: 'LCR Honda IDEMITSU',
       image: 'assets/images/nakagami.jpg',
     ),
     'oliveira': Rider(
@@ -120,6 +139,18 @@ class RiderData with ChangeNotifier {
       id: 'lecuona',
       name: 'Iker Lecuona',
       team: 'Tech 3 KTM Factory Racing',
+      image: 'assets/images/lecuona.jpg',
+    ),
+    'pirro': Rider(
+      id: 'pirro',
+      name: 'Michele Pirro',
+      team: 'Ducati Lenovo Team',
+      image: 'assets/images/lecuona.jpg',
+    ),
+    'bradl': Rider(
+      id: 'bradl',
+      name: 'Stefan Bradl',
+      team: 'Team Honda HRC',
       image: 'assets/images/lecuona.jpg',
     ),
   };

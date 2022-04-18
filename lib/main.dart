@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
-import './models_provider/riderModel.dart';
+import 'models_provider/rider_model.dart';
 import './models_provider/authenticate.dart';
 import './models_provider/grid_provider.dart';
 import './models_provider/calculate_points.dart';

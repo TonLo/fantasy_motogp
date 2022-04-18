@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './grid_provider.dart';
 import './authenticate.dart';
-import './riderModel.dart';
+import 'rider_model.dart';
 import './rider_data.dart';
 import '../screens/select_rider_screen.dart';
 
@@ -14,10 +14,7 @@ class FirebaseActions with ChangeNotifier {
   final _firebaseActions = FirebaseFirestore.instance;
   Authenticate _auth = Authenticate();
   //var rider = Rider();
-  Map retrievedResultsData = Map();
-  Map finalUserPicksData = Map();
-
-  String _round;
+  Map _retrievedResultsData = Map();
 
   // Go to PickRiderScreen and retrieve selected rider and
   // add selected rider to the grid
@@ -50,44 +47,79 @@ class FirebaseActions with ChangeNotifier {
     return orderedList;
   }
 
-  Future<List> getFirebaseRiderList() async {
-    var teamList = await FirebaseFirestore.instance.collection('riders').get();
-    return teamList.docs.map((e) => e.data()).toList();
+  Future getFirebaseRiderList() async {
+    var teamList;
+    try {
+      teamList = await FirebaseFirestore.instance.collection('riders').get();
+      return teamList.docs.map((e) => e.data()).toList();
+    } on PlatformException catch (error) {
+      String errorMessage = 'Could not contact server. Pleae try again later.';
+      if (error.message != null) {
+        errorMessage = error.message;
+      }
+      print(errorMessage);
+    } catch (error) {
+      print(error);
+    }
+    //return teamList;
   }
 
-  Future<void> retrieveFinalResults(BuildContext ctx) async {
-    var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
-    //List _tempResultsList = List.generate(15, (index) => [], growable: true);
-    var retrieveResults = await FirebaseFirestore.instance
-        .collection('2021Results')
-        .doc('round1')
-        .get();
-
-    retrievedResultsData = retrieveResults.get('raceResults');
-    retrievedResultsData.entries.forEach(
-      (element) => _gridProvider.finalResultsList.setAll(
-        int.parse(element.key),
-        [element.value],
-      ),
-    );
+  Future<List> getFinalResults(BuildContext ctx, String currentRound) async {
+    List _resultsList = List.generate(15, (index) => [], growable: true);
+    try {
+      var retrieveResults = await FirebaseFirestore.instance
+          .collection('2021Results')
+          .doc(currentRound)
+          .get();
+      _retrievedResultsData = retrieveResults.get('raceResults');
+      _retrievedResultsData.entries.forEach(
+        (element) => _resultsList.setAll(
+          int.parse(element.key),
+          [element.value],
+        ),
+      );
+      //return _resultsList;
+    } on PlatformException catch (error) {
+      String errorMessage = 'Could not contact server. Pleae try again later.';
+      if (error.message != null) {
+        errorMessage = error.message;
+      }
+      print(errorMessage);
+    } catch (error) {
+      print(error);
+    }
+    return _resultsList;
   }
 
-  Future retrieveFinalUserPicks(BuildContext ctx) async {
-    var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
+   getUserPicks(BuildContext ctx, String currentRound) async {
     var _rider = Provider.of<RiderData>(ctx, listen: false);
-
-    var retrieveUserPicks = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(_auth.getUser())
-        .collection('picks')
-        .doc('round1')
-        .get();
-
-    finalUserPicksData = retrieveUserPicks.data();
-    finalUserPicksData.entries.forEach((element) {
-      _gridProvider.retrievedUserPickList[int.parse(element.key)] =
-          _rider.riderData['${element.value}'];
-    });
+    
+    List<Rider> _tempUserPicksList =
+        List<Rider>.generate(15, (index) => Rider(), growable: true);
+    Map _getUserPicksData = {};
+    try {
+      var _getUserPicks = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.getUser())
+          .collection('picks')
+          .doc(currentRound)
+          .get();
+      _getUserPicksData = _getUserPicks.data();
+      _getUserPicksData.entries.forEach((element) {
+        _tempUserPicksList[int.parse(element.key)] =
+            _rider.riderData['${element.value}'];
+      });
+      return _tempUserPicksList;
+    } on PlatformException catch (error) {
+      var errorMessage = 'Could not contact server. Pleae try again later.';
+      if (error.message != null) {
+        errorMessage = error.message;
+      }
+      print(errorMessage);
+    } catch (error) {
+      print(error);
+    }
+    return _tempUserPicksList;
   }
 
   Future<void> savePicksToServer(BuildContext ctx) async {
@@ -118,13 +150,13 @@ class FirebaseActions with ChangeNotifier {
   }
 
   // This will
-  void currentRound(int weekend) {
-    switch (weekend) {
-      case 0:
-        {
-          _round = 'round1';
-          return;
-        }
-    }
-  }
+  // void currentRound(int weekend) {
+  //   switch (weekend) {
+  //     case 0:
+  //       {
+  //         _round = 'round1';
+  //         return;
+  //       }
+  //   }
+  // }
 }

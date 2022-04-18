@@ -11,4 +11,5 @@
     "editor.guides.bracketPairs":true,
 
     "editor.guides.bracketPairsHorizontal": true,
+    "java.configuration.updateBuildConfiguration": "automatic",
 }
