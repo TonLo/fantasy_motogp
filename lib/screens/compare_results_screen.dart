@@ -1,17 +1,7 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/rendering.dart';
-
-import '../models_provider/compare_provider.dart';
 import '../models_provider/rider_model.dart';
 import '../models_provider/firebase_actions.dart';
-import '../models_provider/grid_provider.dart';
-import '../models_provider/current_round_provider.dart';
-import '../models_provider/rider_data.dart';
 import '../models_provider/calculate_points.dart';
 
 class CompareResultsScreen extends StatefulWidget {
@@ -36,11 +26,9 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
       BuildContext context, String currentRound) async {
     _resultsList = await Future.any([
       getFirebaseFinalResultsList(context, currentRound),
-      //getUserPicks(context, currentRound),
     ]);
 
     _userPicksList = await Future.any([
-      //getFirebaseFinalResultsList(context, currentRound),
       getUserPicks(context, currentRound),
     ]);
 
@@ -54,8 +42,6 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
 
   Future<List> getFirebaseFinalResultsList(
       BuildContext context, String currentRound) async {
-    // _resultsList = await Provider.of<FirebaseActions>(context, listen: false)
-    //     .getFinalResults(context, currentRound);
     return await Provider.of<FirebaseActions>(context, listen: false)
         .getFinalResults(context, currentRound);
   }
@@ -64,13 +50,6 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
       BuildContext context, String currentRound) async {
     return await Provider.of<FirebaseActions>(context, listen: false)
         .getUserPicks(context, currentRound);
-
-    // _userPicksList = Provider.of<FirebaseActions>(context, listen: false)
-    //     .getUserPicks(context, currentRound);
-
-    // setState(() {
-    //   _isLeftListLoading = false;
-    // });
   }
 
   void _getPickResults(List userPicks, List finalResults) {
@@ -217,13 +196,6 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
     }
   }
 
-  // @override
-  // // void setState(VoidCallback fn) {
-  // //   if (mounted) {
-  // //     super.setState(fn);
-  // //   }
-  // // }
-
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -301,9 +273,10 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
                 ),
               ),
               Container(
-                  child: _pointsCalculated
-                      ? Text('Total points this round: $_totalPoints')
-                      : Text('Calculating Points...')),
+                child: _pointsCalculated
+                    ? Text('Total points this round: $_totalPoints')
+                    : Text('Calculating Points...'),
+              ),
             ],
           ),
         ],

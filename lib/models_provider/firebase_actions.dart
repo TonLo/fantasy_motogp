@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +12,6 @@ import '../screens/select_rider_screen.dart';
 class FirebaseActions with ChangeNotifier {
   final _firebaseActions = FirebaseFirestore.instance;
   Authenticate _auth = Authenticate();
-  //var rider = Rider();
   Map _retrievedResultsData = Map();
 
   // Go to PickRiderScreen and retrieve selected rider and
@@ -21,8 +19,6 @@ class FirebaseActions with ChangeNotifier {
   void goToPickRiderScreen(BuildContext ctx, int gridPosition) async {
     var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
     _gridProvider.unorderedListOfRiders = await getFirebaseRiderList();
-    // _gridProvider.orderedListOfRiders =
-    //     orderRiderList(_gridProvider.unorderedListOfRiders);
 
     Rider _selectedRider = await Navigator.push(
       ctx,
@@ -61,7 +57,6 @@ class FirebaseActions with ChangeNotifier {
     } catch (error) {
       print(error);
     }
-    //return teamList;
   }
 
   Future<List> getFinalResults(BuildContext ctx, String currentRound) async {
@@ -78,7 +73,6 @@ class FirebaseActions with ChangeNotifier {
           [element.value],
         ),
       );
-      //return _resultsList;
     } on PlatformException catch (error) {
       String errorMessage = 'Could not contact server. Pleae try again later.';
       if (error.message != null) {
@@ -91,9 +85,9 @@ class FirebaseActions with ChangeNotifier {
     return _resultsList;
   }
 
-   getUserPicks(BuildContext ctx, String currentRound) async {
+  getUserPicks(BuildContext ctx, String currentRound) async {
     var _rider = Provider.of<RiderData>(ctx, listen: false);
-    
+
     List<Rider> _tempUserPicksList =
         List<Rider>.generate(15, (index) => Rider(), growable: true);
     Map _getUserPicksData = {};
@@ -148,15 +142,4 @@ class FirebaseActions with ChangeNotifier {
       '14': _gridProvider.finalUserPickList[14].id,
     });
   }
-
-  // This will
-  // void currentRound(int weekend) {
-  //   switch (weekend) {
-  //     case 0:
-  //       {
-  //         _round = 'round1';
-  //         return;
-  //       }
-  //   }
-  // }
 }

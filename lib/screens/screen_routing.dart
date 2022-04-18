@@ -81,7 +81,6 @@ class _ScreenRoutingState extends State<ScreenRouting> {
               label: 'Week By Week',
               backgroundColor: Colors.white),
         ],
-        //type: BottomNavigationBarType.shifting,
         backgroundColor: Colors.black38,
         selectedItemColor: Colors.amber[900],
         unselectedItemColor: Colors.white,
