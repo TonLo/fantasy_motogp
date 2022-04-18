@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class Rider with ChangeNotifier {
   String id;
@@ -7,7 +6,8 @@ class Rider with ChangeNotifier {
   String name;
   String team;
   int gridPosition;
-  double points;
+  double points = 0;
+  bool correctPick = false;
 
   Rider(
       {this.id,
@@ -15,5 +15,6 @@ class Rider with ChangeNotifier {
       this.name,
       this.team,
       this.gridPosition,
-      this.points});
+      this.points,
+      this.correctPick});
 }

@@ -1,3 +1,4 @@
+import 'package:fantasy_motogp/models_provider/compare_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,12 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
-import './models-provider/riderModel.dart';
-import './screens/pick_rider_screen.dart';
-import './screens/rider_selected_screen.dart';
-import './models-provider/authenticate.dart';
-import './widgets/login_screen.dart';
-import 'models-provider/grid_model.dart';
+import 'models_provider/rider_model.dart';
+import './models_provider/authenticate.dart';
+import './models_provider/grid_provider.dart';
+import './models_provider/calculate_points.dart';
+import './models_provider/firebase_actions.dart';
+import './models_provider/rider_data.dart';
+import './screens/login_screen.dart';
+import './screens/screen_routing.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +32,20 @@ class FantasyMotogp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Authenticate(),
         ),
-        ChangeNotifierProvider<GridModel>(
-          create: (ctx) => GridModel(),
+        ChangeNotifierProvider<GridProvider>(
+          create: (ctx) => GridProvider(),
+        ),
+        ChangeNotifierProvider<CalculatePoints>(
+          create: (ctx) => CalculatePoints(),
+        ),
+        ChangeNotifierProvider<FirebaseActions>(
+          create: (ctx) => FirebaseActions(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CompareProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => RiderData(),
         ),
       ],
       child: MaterialApp(
@@ -44,13 +59,13 @@ class FantasyMotogp extends StatelessWidget {
               if (!userSnapshot.hasData) {
                 return AuthScreen();
               }
-              return RiderSelectedScreen();
+              return ScreenRouting();
             }),
-        routes: {
-          PickRiderScreen.routeName: (BuildContext ctx) => PickRiderScreen(),
-          RiderSelectedScreen.routeName: (BuildContext ctx) =>
-              RiderSelectedScreen(),
-        },
+        // routes: {
+        //   GridScreen.routeName: (BuildContext ctx) => GridScreen(),
+        //   CompareResultsScreen.routeName: (BuildContext ctx) =>
+        //       CompareResultsScreen(),
+        // },
       ),
     );
   }

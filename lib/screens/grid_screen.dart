@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../pick_widgets/eighth_pick.dart';
 import '../pick_widgets/eleventh_pick.dart';
@@ -18,15 +21,39 @@ import '../pick_widgets/tenth_pick.dart';
 import '../pick_widgets/third_pick.dart';
 import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
+import '../models_provider/firebase_actions.dart';
+import '../models_provider/grid_provider.dart';
 
-class RiderSelectedScreen extends StatefulWidget {
-  static const routeName = '/riderSelectedScreen';
-
+class GridScreen extends StatefulWidget {
   @override
-  _RiderSelectedScreenState createState() => _RiderSelectedScreenState();
+  _GridScreenState createState() => _GridScreenState();
 }
 
-class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
+class _GridScreenState extends State<GridScreen> {
+  DocumentSnapshot finalResults;
+  bool lockRiderPicks = false;
+  String _currentRound = 'round1';
+
+  Map finalResultsData = Map();
+  List finalResultsList = List.generate(15, (index) => [], growable: true);
+
+  Future<void> _submitPicks() async {
+    var _gridProvider = Provider.of<GridProvider>(context, listen: false);
+    _gridProvider.fullGrid();
+    try {
+      await Provider.of<FirebaseActions>(context, listen: false)
+          .savePicksToServer(context);
+      await Provider.of<FirebaseActions>(context, listen: false)
+          .getFinalResults(context, _currentRound);
+    } on PlatformException catch (error) {
+      var errorMessage = 'Could not contact server';
+      if (error.message != null) {
+        errorMessage = error.message;
+      }
+      print(errorMessage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +64,7 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
               icon: Icon(Icons.save),
               onPressed: () {
                 showDialog(
+                    useRootNavigator: false,
                     context: context,
                     builder: (_) => AlertDialog(
                           title: Text('Save Picks'),
@@ -47,9 +75,11 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
                               onPressed: () => Navigator.pop(context),
                             ),
                             TextButton(
-                              child: Text('Yes'),
-                              onPressed: () {},
-                            ),
+                                child: Text('Yes'),
+                                onPressed: () {
+                                  _submitPicks();
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ));
               })
@@ -79,6 +109,7 @@ class _RiderSelectedScreenState extends State<RiderSelectedScreen> {
           ],
         ),
       ),
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       body: ListView(
         children: <Widget>[

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
-import '../models-provider/authenticate.dart';
+import '../models_provider/authenticate.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -92,13 +92,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {
-    'email': '',
-    'password': '',
-  };
 
   bool _isLoading = false;
   final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -119,7 +117,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    print(_authData['email']);
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
@@ -128,22 +125,24 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Authenticate>(context, listen: false).login(
-        _authData['email'],
-        _authData['password'],
-      );
-    } else {
-      // Sign user up
-      await Provider.of<Authenticate>(context, listen: false).signUp(
-        _authData['email'],
-        _authData['password'],
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Authenticate>(context, listen: false).login(
+          _emailController.text,
+          _passwordController.text,
+        );
+      } else {
+        // Sign user up
+        await Provider.of<Authenticate>(context, listen: false).signUp(
+          _emailController.text,
+          _passwordController.text,
+          _usernameController.text,
+        );
+      }
+    } catch (e) {
+      print(e.toString());
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   void _switchAuthMode() {
@@ -159,6 +158,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    _isLoading = false;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
@@ -167,9 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       elevation: 8.0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 360 : 260,
+        height: _authMode == AuthMode.Signup ? 420 : 260,
         constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 360 : 260),
+            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 420 : 260),
         width: deviceSize.width * 0.75,
         child: Form(
           key: _formKey,
@@ -177,23 +185,34 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.all(8),
             child: Column(
               children: <Widget>[
-                // EMAIL TEXT FORM FIELD
+                //////////////// EMAIL TEXT FORM FIELD //////////////////
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Enter Email:',
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  controller: _emailController,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
                       return 'Invalid Email Address.';
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                    _authData['email'] = value;
-                  },
                 ),
-                // PASSWORD TEXT FORM FIELD
+                ////////////////// USERNAME TEXT FORM FIELD /////////////////
+                if (_authMode == AuthMode.Signup)
+                  TextFormField(
+                    enabled: _authMode == AuthMode.Signup,
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                    ),
+                    controller: _usernameController,
+                    // Check the database if the username is already taken
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
+                //////////////// PASSWORD TEXT FORM FIELD ///////////////////
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -206,10 +225,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                    _authData['password'] = value;
-                  },
                 ),
+                //////////////////// CONFIRM PASSWORD FOR USERS SIGNING UP /////////////
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
@@ -227,19 +244,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 15),
                 ),
-                if(_isLoading) CircularProgressIndicator(),
-                if(!_isLoading)
-                //SUBMIT BUTTON
-                ElevatedButton(
-                  child:
-                      Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Color.fromRGBO(0, 0, 0, 1),
+                if (_isLoading) CircularProgressIndicator(),
+                if (!_isLoading)
+                  //SUBMIT BUTTON
+                  ElevatedButton(
+                    child:
+                        Text(_authMode == AuthMode.Login ? 'Login' : 'Sign Up'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromRGBO(0, 0, 0, 1),
+                      ),
                     ),
+                    onPressed: _submit,
                   ),
-                  onPressed: _submit,
-                ),
                 TextButton(
                   child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
