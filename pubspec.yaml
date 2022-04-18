@@ -55,31 +55,30 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/rossi.jpg
-    - assets/images/marquezM.jpg
-    - assets/images/dovi.jpg
-    - assets/images/vinales.jpg
+    - assets/images/marquezM.png
+    - assets/images/dovizioso.png
+    - assets/images/vinales.png
     - assets/images/zarco.png
-    - assets/images/rins.jpg
-    - assets/images/rabat.jpg
-    - assets/images/quartararo.jpg
-    - assets/images/petrucci.jpg
-    - assets/images/oliveira.jpg
-    - assets/images/nakagami.jpg
-    - assets/images/morbidelli.jpg
-    - assets/images/mir.jpg
-    - assets/images/miller.jpg
-    - assets/images/marquezA.jpg
-    - assets/images/lecuona.jpg
-    - assets/images/iannone.jpg
-    - assets/images/espargaroP.jpg
-    - assets/images/espargaroA.jpg
-    - assets/images/crutchlow.jpg
-    - assets/images/binder.jpg
-    - assets/images/bagnaia.jpg
-    - assets/images/martin.jpg
-    - assets/images/bastianini.jpg
-    - assets/images/marini.jpg
+    - assets/images/rins.png
+    - assets/images/quartararo.png
+    - assets/images/oliveira.png
+    - assets/images/nakagami.png
+    - assets/images/morbidelli.png
+    - assets/images/mir.png
+    - assets/images/miller.png
+    - assets/images/marquezA.png
+    - assets/images/espargaroP.png
+    - assets/images/espargaroA.png
+    - assets/images/binderB.png
+    - assets/images/binderD.png
+    - assets/images/bagnaia.png
+    - assets/images/martin.png
+    - assets/images/bastianini.png
+    - assets/images/marini.png
+    - assets/images/bezzecchi.png
+    - assets/images/diGinnantonio.png
+    - assets/images/fernandez.png
+    - assets/images/gardner.png
     - assets/images/emptyImage.jpeg
     - assets/images/genericPerson.png
     - assets/logos/aprilia.jpg
