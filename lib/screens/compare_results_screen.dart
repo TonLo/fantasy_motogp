@@ -74,6 +74,10 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
     });
   }
 
+  get eventName{
+    
+  }
+
   Widget dropDownBoxWidget(BuildContext context) {
     return DropdownButton<String>(
       value: _dropdownValue,
