@@ -3,125 +3,102 @@ import 'rider_model.dart';
 
 class RiderData with ChangeNotifier {
   final Map riderData = {
+// Aprilia Racing
+    'espargaroA': Rider(
+      id: 'espargaroA',
+      name: 'Aleix Espargaro',
+      team: 'Aprilia Racing',
+      image: 'assets/images/espargaroA.png',
+    ),
+    'vinales': Rider(
+      id: 'vinales',
+      name: 'Maverick Vinales',
+      team: 'Aprilia Racing',
+      image: 'assets/images/vinales.png',
+    ),
+
+    // Ducati Lenovo Team
     'bagnaia': Rider(
       id: 'bagnaia',
       name: 'Francesco Bagnaia',
       team: 'Ducati Lenovo Team',
-      image: 'assets/images/bagnaia.jpg',
-    ),
-    'bastianini': Rider(
-      id: 'bastianini',
-      name: 'Enea Bastianini',
-      team: 'Sky VR46 Avintia',
-      image: 'assets/images/bastianini.jpg',
-    ),
-    'binder': Rider(
-      id: 'binder',
-      name: 'Brad Binder',
-      team: 'Red Bull KTM Factory Racing',
-      image: 'assets/images/binder.jpg',
-    ),
-    'espargaroA': Rider(
-      id: 'espargaroA',
-      name: 'Aleix Espargaro',
-      team: 'Aprilia Racing Team Gresini',
-      image: 'assets/images/espargaroA.jpg',
-    ),
-    'savadori': Rider(
-      id: 'savadori',
-      name: 'Lorenzo Savadori',
-      team: 'Aprilia Racing Team Gresini',
-      image: 'assets/images/espargaroA.jpg',
-    ),
-    'espargaroP': Rider(
-      id: 'espargaroP',
-      name: 'Pol Espargaro',
-      team: 'Repsol Honda Team',
-      image: 'assets/images/espargaroP.jpg',
-    ),
-    'rossi': Rider(
-      id: 'rossi',
-      name: 'Valentino Rossi',
-      team: 'Petronas Yamaha SRT',
-      image: 'assets/images/rossi.jpg',
-    ),
-    'dovizioso': Rider(
-      id: 'dovizioso',
-      name: 'Andrea Dovizioso',
-      team: 'Petronas Yamaha SRT',
-      image: 'assets/images/rossi.jpg',
-    ),
-    'marini': Rider(
-      id: 'marini',
-      name: 'Luca Marini',
-      team: 'Sky VR46 Avintia',
-      image: 'assets/images/marini.jpg',
-    ),
-    'marquezM': Rider(
-      id: 'marquezM',
-      name: 'Marc Marquez',
-      team: 'Repsol Honda Team',
-      image: 'assets/images/marquezM.jpg',
-    ),
-    'marquezA': Rider(
-      id: 'marquezA',
-      name: 'Alex Marquez',
-      team: 'LCR Honda CASTROL',
-      image: 'assets/images/marquezA.jpg',
-    ),
-    'martin': Rider(
-      id: 'martin',
-      name: 'Jorge Martin',
-      team: 'Pramac Racing',
-      image: 'assets/images/martin.jpg',
+      image: 'assets/images/bagnaia.png',
     ),
     'miller': Rider(
       id: 'miller',
       name: 'Jack Miller',
       team: 'Ducati Lenovo Team',
-      image: 'assets/images/miller.jpg',
+      image: 'assets/images/miller.png',
     ),
-    'mir': Rider(
-      id: 'mir',
-      name: 'Joan Mir',
-      team: 'Team Suzuki ECSTAR',
-      image: 'assets/images/mir.jpg',
+    'pirro': Rider(
+      id: 'pirro',
+      name: 'Michele Pirro',
+      team: 'Ducati Lenovo Team',
+      image: 'assets/images/pirro.png',
     ),
-    'morbidelli': Rider(
-      id: 'morbidelli',
-      name: 'Franco Morbidelli',
-      team: 'Monster Energy Yamaha MotoGP',
-      image: 'assets/images/morbidelli.jpg',
+
+    // Gresini Racing MotoGP
+    'bastianini': Rider(
+      id: 'bastianini',
+      name: 'Enea Bastianini',
+      team: 'Gresini Racing MotoGP',
+      image: 'assets/images/bastianini.png',
+    ),
+    'diGiannantonio': Rider(
+      id: 'diGiannantonio',
+      name: 'Fabio Di Giannantonio',
+      team: 'Gresini Racing MotoGP',
+      image: 'assets/images/diGiannantonio.png',
+    ),
+
+    // LCR Honda
+    'marquezA': Rider(
+      id: 'marquezA',
+      name: 'Alex Marquez',
+      team: 'LCR Honda',
+      image: 'assets/images/marquezA.png',
     ),
     'nakagami': Rider(
       id: 'nakagami',
       name: 'Takaaki Nakagami',
-      team: 'LCR Honda IDEMITSU',
-      image: 'assets/images/nakagami.jpg',
+      team: 'LCR Honda',
+      image: 'assets/images/nakagami.png',
     ),
-    'oliveira': Rider(
-      id: 'oliveira',
-      name: 'Miguel Oliveira',
-      team: 'Red Bull KTM Factory Racing',
-      image: 'assets/images/oliveira.jpg',
+
+    // Monster Energy Yamaha MotoGP
+    'morbidelli': Rider(
+      id: 'morbidelli',
+      name: 'Franco Morbidelli',
+      team: 'Monster Energy Yamaha MotoGP',
+      image: 'assets/images/morbidelli.png',
     ),
     'quartararo': Rider(
       id: 'quartararo',
       name: 'Fabio Quartararo',
       team: 'Monster Energy Yamaha MotoGP',
-      image: 'assets/images/quartararo.jpg',
+      image: 'assets/images/quartararo.png',
     ),
-    'rins': Rider(
-      id: 'rins',
-      name: 'Alex Rins',
-      team: 'Team Suzuki ECSTAR',
-      image: 'assets/images/rins.jpg',
+
+    // Mooney VR46 Racing Team
+    'marini': Rider(
+      id: 'marini',
+      name: 'Luca Marini',
+      team: 'Mooney VR46 Racing Team',
+      image: 'assets/images/marini.png',
     ),
-    'vinales': Rider(
-      id: 'vinales',
-      name: 'Maverick Vinales',
-      team: 'Aprilia Racing Team Gresini',
-      image: 'assets/images/vinales.jpg',
+    'bezzecchi': Rider(
+      id: 'bezzecchi',
+      name: 'Marco Bezzecchi',
+      team: 'Mooney VR46 Racing Team',
+      image: 'assets/images/bezzecchi.png',
+    ),
+
+    // Pramac Racing
+    'martin': Rider(
+      id: 'martin',
+      name: 'Jorge Martin',
+      team: 'Pramac Racing',
+      image: 'assets/images/martin.png',
     ),
     'zarco': Rider(
       id: 'zarco',
@@ -129,29 +106,81 @@ class RiderData with ChangeNotifier {
       team: 'Pramac Racing',
       image: 'assets/images/zarco.png',
     ),
-    'petrucci': Rider(
-      id: 'petrucci',
-      name: 'Danilo Petrucci',
-      team: 'Tech 3 KTM Factory Racing',
-      image: 'assets/images/petrucci.jpg',
+
+    // Red Bull KTM Factory Racing
+    'binderB': Rider(
+      id: 'binderB',
+      name: 'Brad Binder',
+      team: 'Red Bull KTM Factory Racing',
+      image: 'assets/images/binderB.png',
     ),
-    'lecuona': Rider(
-      id: 'lecuona',
-      name: 'Iker Lecuona',
-      team: 'Tech 3 KTM Factory Racing',
-      image: 'assets/images/lecuona.jpg',
+    'oliveira': Rider(
+      id: 'oliveira',
+      name: 'Miguel Oliveira',
+      team: 'Red Bull KTM Factory Racing',
+      image: 'assets/images/oliveira.png',
     ),
-    'pirro': Rider(
-      id: 'pirro',
-      name: 'Michele Pirro',
-      team: 'Ducati Lenovo Team',
-      image: 'assets/images/lecuona.jpg',
+
+    // Repsol Honda Team
+    'espargaroP': Rider(
+      id: 'espargaroP',
+      name: 'Pol Espargaro',
+      team: 'Repsol Honda Team',
+      image: 'assets/images/espargaroP.png',
+    ),
+    'marquezM': Rider(
+      id: 'marquezM',
+      name: 'Marc Marquez',
+      team: 'Repsol Honda Team',
+      image: 'assets/images/marquezM.png',
     ),
     'bradl': Rider(
       id: 'bradl',
       name: 'Stefan Bradl',
       team: 'Team Honda HRC',
-      image: 'assets/images/lecuona.jpg',
+      image: 'assets/images/bradl.png',
+    ),
+
+    // Team Suzuki ECSTAR
+    'mir': Rider(
+      id: 'mir',
+      name: 'Joan Mir',
+      team: 'Team Suzuki ECSTAR',
+      image: 'assets/images/mir.png',
+    ),
+    'rins': Rider(
+      id: 'rins',
+      name: 'Alex Rins',
+      team: 'Team Suzuki ECSTAR',
+      image: 'assets/images/rins.png',
+    ),
+
+    // Tech3 KTM Factory Racing
+    'fernandez': Rider(
+      id: 'fernandez',
+      name: 'Raul Fernandez',
+      team: 'Tech3 KTM Factory Racing',
+      image: 'assets/images/fernandez.png',
+    ),
+    'gardner': Rider(
+      id: 'gardner',
+      name: 'Remy Gardner',
+      team: 'Tech3 KTM Factory Racing',
+      image: 'assets/images/gardner.png',
+    ),
+
+    // WithU Yamaha RNF MotoGP Team
+    'binderD': Rider(
+      id: 'binderD',
+      name: 'Darryn Binder',
+      team: 'WithU Yamaha RNF MotoGP Team',
+      image: 'assets/images/binderD.png',
+    ),
+    'dovizioso': Rider(
+      id: 'dovizioso',
+      name: 'Andrea Dovizioso',
+      team: 'WithU Yamaha RNF MotoGP Team',
+      image: 'assets/images/dovizioso.png',
     ),
   };
 }
