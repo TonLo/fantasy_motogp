@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-class Rider with ChangeNotifier {
+class Rider  {
   String id;
   String image;
   String name;

@@ -23,14 +23,14 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
 
   CalculatePoints _calcPoints = CalculatePoints();
 
-  Future<void> getPicksAndResultsData(
+  Future<void> _getPicksAndResultsData(
       BuildContext context, String currentRound) async {
     _resultsList = await Future.any([
-      getFirebaseFinalResultsList(context, currentRound),
+      _getFirebaseFinalResultsList(context, currentRound),
     ]);
 
     _userPicksList = await Future.any([
-      getUserPicks(context, currentRound),
+      _getUserPicks(context, currentRound),
     ]);
 
     for (int i = 0; i < _userPicksList.length; i++) {
@@ -41,13 +41,13 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
     _getPickResults(_userPicksList, _resultsList);
   }
 
-  Future<List> getFirebaseFinalResultsList(
+  Future<List> _getFirebaseFinalResultsList(
       BuildContext context, String currentRound) async {
     return await Provider.of<FirebaseActions>(context, listen: false)
         .getFinalResults(context, currentRound);
   }
 
-  Future<List<Rider>> getUserPicks(
+  Future<List<Rider>> _getUserPicks(
       BuildContext context, String currentRound) async {
     return await Provider.of<FirebaseActions>(context, listen: false)
         .getUserPicks(context, currentRound);
@@ -78,7 +78,7 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
     
   }
 
-  Widget dropDownBoxWidget(BuildContext context) {
+  Widget _dropDownBoxWidget(BuildContext context) {
     return DropdownButton<String>(
       value: _dropdownValue,
       elevation: 10,
@@ -87,7 +87,7 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
         setState(() {
           _dropdownValue = newValue;
         });
-        getPicksAndResultsData(context, _dropdownValue);
+        _getPicksAndResultsData(context, _dropdownValue);
       },
       style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
@@ -116,13 +116,13 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
       ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(setGPName(value)),
+          child: Text(_setGPName(value)),
         );
       }).toList(),
     );
   }
 
-  String setGPName(String round) {
+  String _setGPName(String round) {
     switch (round) {
       case 'round1':
         {
@@ -221,7 +221,7 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
               Center(
                 child: Container(
                   width: 300,
-                  child: dropDownBoxWidget(context),
+                  child: _dropDownBoxWidget(context),
                 ),
               ),
               Flexible(

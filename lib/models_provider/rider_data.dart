@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'rider_model.dart';
 
 class RiderData with ChangeNotifier {
+  
   final Map riderData = {
 // Aprilia Racing
     'espargaroA': Rider(
@@ -183,4 +184,5 @@ class RiderData with ChangeNotifier {
       image: 'assets/images/dovizioso.png',
     ),
   };
+  
 }

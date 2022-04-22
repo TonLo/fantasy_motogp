@@ -22,6 +22,8 @@ import '../pick_widgets/thirteenth_pick.dart';
 import '../pick_widgets/twelfth_pick.dart';
 import '../models_provider/firebase_actions.dart';
 import '../models_provider/grid_provider.dart';
+import '../models_provider/race_week_provider.dart';
+import '../models_provider/race_week_info_model.dart';
 
 class GridScreen extends StatefulWidget {
   @override
@@ -30,24 +32,29 @@ class GridScreen extends StatefulWidget {
 
 class _GridScreenState extends State<GridScreen> {
   DocumentSnapshot finalResults;
-  bool lockRiderPicks = false;
-  String _currentRound = 'round1';
-
+  bool _lockRiderPicks = false;
+  DateTime _now = DateTime.now();
+  RaceWeek _raceWeek = RaceWeek();
   Map finalResultsData = Map();
   List finalResultsList = List.generate(15, (index) => [], growable: true);
 
-  String getCurrentRound(){
-    
+  void _getRaceWeek(BuildContext context) {
+    var _raceWeekProvider =
+        Provider.of<RaceWeekProvider>(context, listen: false);
+
+    String raceID = _raceWeekProvider.getRaceWeek(DateTime.now());
+
+    _raceWeek = _raceWeekProvider.eventData[raceID];
   }
 
-  Future<void> _submitPicks() async {
+  Future<void> _submitPicks(BuildContext context) async {
     var _gridProvider = Provider.of<GridProvider>(context, listen: false);
     _gridProvider.fullGrid();
     try {
       await Provider.of<FirebaseActions>(context, listen: false)
-          .savePicksToServer(context);
+          .savePicksToServer(context, _raceWeek.id);
       await Provider.of<FirebaseActions>(context, listen: false)
-          .getFinalResults(context, _currentRound);
+          .getFinalResults(context, _raceWeek.id);
     } on PlatformException catch (error) {
       var errorMessage = 'Could not contact server';
       if (error.message != null) {
@@ -59,9 +66,10 @@ class _GridScreenState extends State<GridScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _getRaceWeek(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Picked Riders'),
+        title: Text(_raceWeek.eventName),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.save),
@@ -80,7 +88,7 @@ class _GridScreenState extends State<GridScreen> {
                             TextButton(
                                 child: Text('Yes'),
                                 onPressed: () {
-                                  _submitPicks();
+                                  _submitPicks(context);
                                   Navigator.pop(context);
                                 }),
                           ],

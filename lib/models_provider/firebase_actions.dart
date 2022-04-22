@@ -116,14 +116,14 @@ class FirebaseActions with ChangeNotifier {
     return _tempUserPicksList;
   }
 
-  Future<void> savePicksToServer(BuildContext ctx) async {
+  Future<void> savePicksToServer(BuildContext ctx, String currentRound) async {
     var _gridProvider = Provider.of<GridProvider>(ctx, listen: false);
 
     _firebaseActions
         .collection('users')
         .doc(_auth.getUser())
         .collection('picks')
-        .doc('round1')
+        .doc(currentRound)
         .set({
       '0': _gridProvider.finalUserPickList[0].id,
       '1': _gridProvider.finalUserPickList[1].id,

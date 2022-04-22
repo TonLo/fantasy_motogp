@@ -1,3 +1,4 @@
+import 'package:fantasy_motogp/models_provider/race_week_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ import './models_provider/grid_provider.dart';
 import './models_provider/calculate_points.dart';
 import './models_provider/firebase_actions.dart';
 import './models_provider/rider_data.dart';
+import './models_provider/race_week_provider.dart';
 import './screens/login_screen.dart';
 import './screens/screen_routing.dart';
 
@@ -26,9 +28,6 @@ class FantasyMotogp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Rider(),
-        ),
-        ChangeNotifierProvider(
           create: (ctx) => Authenticate(),
         ),
         ChangeNotifierProvider<GridProvider>(
@@ -42,6 +41,9 @@ class FantasyMotogp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => RiderData(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => RaceWeekProvider(),
         ),
       ],
       child: MaterialApp(
