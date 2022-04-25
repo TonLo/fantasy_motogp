@@ -87,7 +87,7 @@ class RaceDates {
   );
 
   final thailandRaceWeek = DateTimeRange(
-    start: DateTime(2022, 10, 29),
+    start: DateTime(2022, 9, 29),
     end: DateTime(2022, 10, 3),
   );
 

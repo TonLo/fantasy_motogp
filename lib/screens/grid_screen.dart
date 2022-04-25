@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,18 +34,19 @@ class GridScreen extends StatefulWidget {
 class _GridScreenState extends State<GridScreen> {
   DocumentSnapshot finalResults;
   bool _lockRiderPicks = false;
-  DateTime _now = DateTime.now();
   RaceWeek _raceWeek = RaceWeek();
   Map finalResultsData = Map();
   List finalResultsList = List.generate(15, (index) => [], growable: true);
 
   void _getRaceWeek(BuildContext context) {
-    var _raceWeekProvider =
-        Provider.of<RaceWeekProvider>(context, listen: false);
+    var _rwp = Provider.of<RaceWeekProvider>(context, listen: false);
+    String raceID = _rwp.getRaceWeek(DateTime(2022, 4, 24));
 
-    String raceID = _raceWeekProvider.getRaceWeek(DateTime.now());
-
-    _raceWeek = _raceWeekProvider.eventData[raceID];
+    if (raceID == 'No Race') {
+      _raceWeek.eventName = raceID;
+    } else {
+      _raceWeek = _rwp.eventData[raceID];
+    }
   }
 
   Future<void> _submitPicks(BuildContext context) async {
@@ -69,7 +71,12 @@ class _GridScreenState extends State<GridScreen> {
     _getRaceWeek(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(_raceWeek.eventName),
+        title: Text(
+          'Round ${_raceWeek.round}: ${_raceWeek.trackName}',
+          style: TextStyle(
+            color: Color.fromARGB(199, 190, 19, 19),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.save),

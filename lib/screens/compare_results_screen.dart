@@ -1,9 +1,11 @@
+import 'package:fantasy_motogp/models_provider/race_week_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models_provider/rider_model.dart';
 import '../models_provider/firebase_actions.dart';
 import '../models_provider/calculate_points.dart';
+import '../models_provider/race_week_provider.dart';
 
 class CompareResultsScreen extends StatefulWidget {
   static const routeName = '/CompareResultsScreen';
@@ -74,9 +76,7 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
     });
   }
 
-  get eventName{
-    
-  }
+  get eventName {}
 
   Widget _dropDownBoxWidget(BuildContext context) {
     return DropdownButton<String>(
@@ -113,6 +113,9 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
         'round16',
         'round17',
         'round18',
+        'round19',
+        'round20',
+        'round21',
       ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -123,78 +126,93 @@ class _CompareResultsScreenState extends State<CompareResultsScreen> {
   }
 
   String _setGPName(String round) {
+    RaceWeekProvider _rwp = RaceWeekProvider();
+    RaceWeek _raceWeek = RaceWeek();
+    _raceWeek = _rwp.eventData[round];
     switch (round) {
       case 'round1':
         {
-          return '01: Barwa Grand Prix of Qatar';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round2':
         {
-          return '02: Tissot Grand Prix of Doha';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round3':
         {
-          return '03: Grande Prémio 888 De Portugal';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round4':
         {
-          return '04: Gran Premio Red Bull De España';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round5':
         {
-          return '05: Shark Grand Prix De France';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round6':
         {
-          return "06: Gran Premio D'italia Oakley";
+          return "Round ${_raceWeek.round}: ${_raceWeek.trackName}";
         }
       case 'round7':
         {
-          return '07: Gran Premi Monster Energy De Catalunya';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round8':
         {
-          return '08: Liqui Moly Motorrad Grand Prix Deutschland';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round9':
         {
-          return '09: Motul TT Assen';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round10':
         {
-          return '10: Michelin® Grand Prix of Styria';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round11':
         {
-          return '11: Bitci Motorrad Grand Prix Von Österreich';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round12':
         {
-          return '12: Monster Energy British Grand Prix';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round13':
         {
-          return '13: Gran Premio Tissot De Aragón';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round14':
         {
-          return '14: Gran Premio Octo Di San Marino E Della Riviera Di Rimini';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round15':
         {
-          return '15: Red Bull Grand Prix Of The Americas';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round16':
         {
-          return "16: Gran Premio Nolan Del Made In Italy E Dell'emilia-Romagna";
+          return "Round ${_raceWeek.round}: ${_raceWeek.trackName}";
         }
       case 'round17':
         {
-          return '17: Grande Prémio Brembo Do Algarve';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       case 'round18':
         {
-          return '18: Gran Premio Motul De La Comunitat Valenciana';
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
+        }
+      case 'round19':
+        {
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
+        }
+      case 'round20':
+        {
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
+        }
+      case 'round21':
+        {
+          return 'Round ${_raceWeek.round}: ${_raceWeek.trackName}';
         }
       default:
         return 'No GP';
